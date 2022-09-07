@@ -18,7 +18,6 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuCheckIcon from "../icons/MenuCheck";
 import NotificationBellIcon from "../icons/NotificationBell";
