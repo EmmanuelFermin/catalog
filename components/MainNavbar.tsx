@@ -1,15 +1,13 @@
 import type { FC } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   AppBar,
   Avatar,
-  Badge,
   Box,
   Button,
   Divider,
   Drawer,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -18,23 +16,29 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import MenuCheckIcon from "../icons/MenuCheck";
-import NotificationBellIcon from "../icons/NotificationBell";
-import LogoutIcon from "../icons/Logout";
-import Logo from "../assets/logo/Logo.png";
 import styled from "styled-components";
+import Logo from "../assets/logo/Logo.png";
+import MainNavIconButtons from "./MainNavIconButtons";
+import MainDrawerItemIcons from "./MainDrawerItemIcons";
+import MainResponsiveMenu from "./MainResponsiveMenu";
 
-interface Props {
+interface DrawerAppBarProps {
   window?: () => Window;
 }
 
 const drawerWidth = 240;
 const navItems = ["Tools", "Catalogs"];
 
-const DrawerAppBar: FC = (props: Props) => {
+const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [notifs, setNotifs] = useState<number>(1);
+  const [checklists, setChecklists] = useState<number>(1);
+  const [totalNotifs, setTotalNotifs] = useState<number>(0);
+
+  useEffect(() => {
+    setTotalNotifs(notifs + checklists);
+  }, [checklists, notifs]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -54,31 +58,7 @@ const DrawerAppBar: FC = (props: Props) => {
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem key="Checked Menu" disablePadding>
-          <ListItemButton
-            aria-label="Checked Menu"
-            sx={{ justifyContent: "center" }}
-          >
-            <StyledBadge color="secondary" badgeContent={1} max={99}>
-              <MenuCheckIcon sx={{ fontSize: "1.3rem" }} />
-            </StyledBadge>
-          </ListItemButton>
-        </ListItem>
-        <ListItem key="Notification Bell" disablePadding>
-          <ListItemButton
-            aria-label="Notification Bell"
-            sx={{ justifyContent: "center" }}
-          >
-            <StyledBadge color="secondary" badgeContent={1} max={99}>
-              <NotificationBellIcon sx={{ fontSize: "1.45rem" }} />
-            </StyledBadge>
-          </ListItemButton>
-        </ListItem>
-        <ListItem key="Logout" disablePadding>
-          <ListItemButton aria-label="Logout" sx={{ justifyContent: "center" }}>
-            <LogoutIcon sx={{ fontSize: "1.45rem" }} />
-          </ListItemButton>
-        </ListItem>
+        <MainDrawerItemIcons />
       </List>
     </Box>
   );
@@ -87,14 +67,12 @@ const DrawerAppBar: FC = (props: Props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box>
+    <>
       <AppBar component="nav" elevation={0}>
         <StyledToolbar>
-          <Avatar
-            sx={{ backgroundColor: "transparent", height: 34, width: 34 }}
-          >
+          <StyledAvatar>
             <Image src={Logo} alt="Centralize Catalog" layout="fill" />
-          </Avatar>
+          </StyledAvatar>
           <Typography
             variant="h6"
             component="div"
@@ -118,69 +96,34 @@ const DrawerAppBar: FC = (props: Props) => {
             placeholder="Search"
             variant="outlined"
           />
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
+          <MainResponsiveMenu
             onClick={handleDrawerToggle}
-            sx={{
-              ml: { xs: "auto", sm: "1rem" },
-              display: { sm: "block", md: "none" },
-            }}
-          >
-            <StyledBadge color="secondary" badgeContent={2} max={99}>
-              <MenuIcon />
-            </StyledBadge>
-          </IconButton>
+            totalNotifs={totalNotifs}
+          />
           <Box
             sx={{
               display: { xs: "none", sm: "none", md: "flex" },
             }}
           >
             {navItems.map((item) => (
-              <Button
+              <NavButton
                 key={item}
                 sx={{
-                  color: "#0F0F0F",
                   fontSize: { lg: "1rem", xl: "1.4rem" },
-                  fontWeight: 300,
-                  textTransform: "none",
                   ml: { md: "11px", lg: "11px", xl: "31px" },
                 }}
               >
                 {item}
-              </Button>
+              </NavButton>
             ))}
-
-            <IconButton
-              aria-label="Checked Menu"
-              sx={{ ml: { md: "26px", lg: "26px", xl: "36px" } }}
-            >
-              <StyledBadge color="secondary" badgeContent={1} max={99}>
-                <MenuCheckIcon
-                  sx={{
-                    fontSize: { md: "1.225rem", lg: "1.225rem", xl: "1.55rem" },
-                  }}
-                />
-              </StyledBadge>
-            </IconButton>
-            <IconButton aria-label="Notification Bell" sx={{ ml: "15px" }}>
-              <StyledBadge color="secondary" badgeContent={1} max={99}>
-                <NotificationBellIcon
-                  sx={{
-                    fontSize: { md: "1.4rem", lg: "1.4rem", xl: "1.8rem" },
-                  }}
-                />
-              </StyledBadge>
-            </IconButton>
-            <IconButton aria-label="Logout" sx={{ ml: "12px" }}>
-              <LogoutIcon
-                sx={{ fontSize: { md: "1.3rem", lg: "1.3rem", xl: "1.6rem" } }}
-              />
-            </IconButton>
+            <MainNavIconButtons
+              notifications={notifs}
+              checklists={checklists}
+            />
           </Box>
         </StyledToolbar>
       </AppBar>
+
       <Box component="nav">
         <Drawer
           anchor="right"
@@ -202,7 +145,7 @@ const DrawerAppBar: FC = (props: Props) => {
           {drawer}
         </Drawer>
       </Box>
-    </Box>
+    </>
   );
 };
 
@@ -253,6 +196,14 @@ const StyledToolbar = styled(Toolbar)`
       padding-right: 65px;
       height: 74px;
     }
+  }
+`;
+
+const StyledAvatar = styled(Avatar)`
+  && {
+    background-color: transparent;
+    height: 34px;
+    width: 34px;
   }
 `;
 
@@ -337,33 +288,10 @@ const SearchField = styled(TextField)`
   }
 `;
 
-const StyledBadge = styled(Badge)`
+const NavButton = styled(Button)`
   && {
-    & span {
-      width: 80%;
-      height: 80%;
-      font-size: 18px;
-      font-weight: 400;
-      right: 1px;
-      top: 1px;
-
-      /* Large devices (laptops/desktops, 900px and up) */
-      @media only screen and (min-width: 900px) {
-        right: 0px;
-        top: 0px;
-      }
-
-      /* Extra large devices (large laptops and desktops, 1200px and up) */
-      @media only screen and (min-width: 1200px) {
-        right: 0px;
-        top: 0px;
-      }
-
-      /* Extra Extra large devices (large laptops and desktops, 1536px and up) */
-      @media only screen and (min-width: 1536px) {
-        right: 1px;
-        top: 1px;
-      }
-    }
+    color: #0f0f0f;
+    font-weight: 300;
+    text-transform: none;
   }
 `;
