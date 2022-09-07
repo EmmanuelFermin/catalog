@@ -4,6 +4,8 @@ import type { AppProps } from "next/app";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../themes/index";
 import CssBaseline from "@mui/material/CssBaseline";
+import MainNavbar from "../components/MainNavbar";
+import ContainerBody from "../components/ContainerBody";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,7 +16,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <MainNavbar />
+        <ContainerBody>
+          <Component {...pageProps} />
+        </ContainerBody>
       </ThemeProvider>
     </>
   );

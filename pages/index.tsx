@@ -1,8 +1,10 @@
+import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import MainNavbar from "../components/MainNavbar";
 
 const Home: NextPage = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+
   return (
     <div>
       <Head>
@@ -10,7 +12,8 @@ const Home: NextPage = () => {
         <meta name="description" content="Centralized Catalog" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainNavbar />
+
+      {isAuthenticated ? <div>Content</div> : ""}
     </div>
   );
 };

@@ -67,7 +67,7 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <>
+    <Box>
       <AppBar component="nav" elevation={0}>
         <StyledToolbar>
           <StyledAvatar>
@@ -145,7 +145,7 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
           {drawer}
         </Drawer>
       </Box>
-    </>
+    </Box>
   );
 };
 
@@ -180,7 +180,6 @@ const StyledToolbar = styled(Toolbar)`
       padding-left: 64px;
       padding-right: 45px;
       height: 54px;
-      /* background-color: orange; */
     }
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -188,7 +187,6 @@ const StyledToolbar = styled(Toolbar)`
       padding-left: 64px;
       padding-right: 65px;
       height: 64px;
-      /* background-color: pink; */
     }
     /* Extra Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1536px) {
