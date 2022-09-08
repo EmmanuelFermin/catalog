@@ -35,7 +35,7 @@ const MainNavIconButtons: FC<MainNavIconButtonsProps> = (props) => {
           />
         </StyledBadge>
       </IconButton>
-      <IconButton aria-label="Logout" sx={{ ml: "12px" }}>
+      <IconButton aria-label="Logout" sx={{ ml: "12px", mr: "-8px" }}>
         <LogoutIcon
           sx={{ fontSize: { md: "1.3rem", lg: "1.3rem", xl: "1.6rem" } }}
         />
