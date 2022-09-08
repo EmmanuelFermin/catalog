@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import {
   Box,
   Button,
@@ -10,17 +10,46 @@ import {
 import GoSearchIcon from "../../icons/GoSearch";
 import styled from "styled-components";
 import type { Product } from "../../types/product";
+import Fuse from "fuse.js";
+import CatalogItem from "./CatalogItem";
 
 interface CatalogProps {
   items: Product[];
 }
 
 const Catalog: FC<CatalogProps> = ({ items }) => {
+  const [query, setQuery] = useState("");
+
+  const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const options = {
+    // includeScore: true,
+    threshold: 0,
+    keys: [
+      "merchantPartNumber",
+      "branchPartNumber",
+      "designation",
+      "attributes",
+    ],
+  };
+
+  const fuse = new Fuse(items, options);
+
+  const results: any = fuse.search(query);
+
+  console.log("FUSE RESULT: ", results);
+
   return (
     <>
       <FlexContainer>
         <Box sx={{ p: "19px 38px 19px 38px", backgroundColor: "#F4F4F4" }}>
-          <SearchField placeholder="Search" />
+          <SearchField
+            placeholder="Search"
+            value={query}
+            onChange={handleOnSearch}
+          />
         </Box>
         <Box sx={{ ml: "37px" }}>
           <Button
@@ -36,80 +65,27 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
 
       <Box sx={{ p: "0 0 20px 20px", width: "1009px" }}>
         <List>
-          {items.map((item) => (
-            <ListItem key={item.productId}>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{
-                    flexGrow: 1,
-                    fontSize: {
-                      sm: "0.75rem",
-                      md: "0.85rem",
-                      lg: "1rem",
-                      xl: "1.47rem",
-                    },
-                    fontWeight: 500,
-                    mt: "33px",
-                  }}
-                >
-                  {item.productName}
-                </Typography>
-                <Typography
-                  component="p"
-                  sx={{
-                    flexGrow: 1,
-                    fontSize: {
-                      sm: "0.75rem",
-                      md: "0.85rem",
-                      lg: "1rem",
-                      xl: "1.1rem",
-                    },
-                    fontWeight: 300,
-                    letterSpacing: "0.74px",
-                    color: "#797777",
-                    mt: "14px",
-                  }}
-                >
-                  {item.productDesc}
-                </Typography>
-                <Typography
-                  component="p"
-                  sx={{
-                    flexGrow: 1,
-                    fontSize: {
-                      sm: "0.75rem",
-                      md: "0.85rem",
-                      lg: "1rem",
-                      xl: "1.1rem",
-                    },
-                    fontWeight: 300,
-                    color: "#797777",
-                    mt: "22.5px",
-                  }}
-                >
-                  {`Your catalog Part Number: ${item.branchPartNumber}`}
-                </Typography>
-                <Typography
-                  component="p"
-                  sx={{
-                    flexGrow: 1,
-                    fontSize: {
-                      sm: "0.75rem",
-                      md: "0.85rem",
-                      lg: "1rem",
-                      xl: "1.1rem",
-                    },
-                    fontWeight: 300,
-                    color: "#797777",
-                  }}
-                >
-                  {"Found in your catalog and 5 others"}
-                </Typography>
-              </Box>
-            </ListItem>
-          ))}
+          {query
+            ? results.map((item: any) => (
+                <CatalogItem
+                  key={item.item.productId}
+                  productName={item.item.productName}
+                  productDesc={item.item.productDesc}
+                  isBoldBranchPartNumber={
+                    query === item.item.branchPartNumber ? true : false
+                  }
+                  branchPartNumber={item.item.branchPartNumber}
+                />
+              ))
+            : items.map((item: any) => (
+                <CatalogItem
+                  key={item.productId}
+                  productName={item.productName}
+                  productDesc={item.productDesc}
+                  isBoldBranchPartNumber={false}
+                  branchPartNumber={item.branchPartNumber}
+                />
+              ))}
         </List>
       </Box>
     </>

@@ -103,9 +103,9 @@ const Filters: FC = () => {
                     key={option.id}
                     control={
                       <Checkbox
-                        icon={<UncheckedBoxIcon sx={{ fontSize: "15px" }} />}
+                        icon={<UncheckedBoxIcon sx={{ fontSize: "15px", backgroundColor: "white" }} />}
                         checkedIcon={
-                          <CheckedBoxIcon sx={{ fontSize: "15px" }} />
+                          <CheckedBoxIcon sx={{ fontSize: "15px", backgroundColor: "white" }} />
                         }
                       />
                     }
