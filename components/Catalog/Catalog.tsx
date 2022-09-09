@@ -12,24 +12,49 @@ import styled from "styled-components";
 import type { Product } from "../../types/product";
 import Fuse from "fuse.js";
 import CatalogItem from "./CatalogItem";
+import { useSelector } from "../../store";
 
 interface CatalogProps {
   items: Product[];
 }
 
+interface FilterSettings {
+  branchAll: boolean;
+  branchCurrent: boolean;
+  branchSpecific: boolean;
+  brandAll: boolean;
+  brandSpecific: boolean;
+  searchMerchant: boolean;
+  searchBranch: boolean;
+  searchDesignation: boolean;
+  searchAttributes: boolean;
+}
+
 const Catalog: FC<CatalogProps> = ({ items }) => {
+  const { filterSettings } = useSelector((state) => state.filters);
   const [query, setQuery] = useState("");
+
+  const {
+    branchAll,
+    branchCurrent,
+    branchSpecific,
+    brandAll,
+    brandSpecific,
+    searchMerchant,
+    searchBranch,
+    searchDesignation,
+    searchAttributes,
+  } = filterSettings[0];
 
   const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
   const options = {
-    // includeScore: true,
     threshold: 0,
     keys: [
-      "merchantPartNumber",
-      "branchPartNumber",
+      `${searchMerchant && "merchantPartNumber"}`,
+      `${searchBranch && "branchPartNumber"}`,
       "designation",
       "attributes",
     ],

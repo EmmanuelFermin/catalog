@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Catalog from "./Catalog";
 import Filters from "./Filters";
 import { Grid } from "@mui/material";
@@ -9,6 +9,8 @@ interface CatalogLayoutProps {
 }
 
 const CatalogLayout: FC<CatalogLayoutProps> = ({ products }) => {
+  
+
   return (
     <Grid container spacing={0.5} columns={21}>
       <Grid item xs={14}>
