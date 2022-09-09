@@ -1,7 +1,8 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import {
   Box,
   Button,
+  FormHelperText,
   List,
   ListItem,
   TextField,
@@ -12,27 +13,19 @@ import styled from "styled-components";
 import type { Product } from "../../types/product";
 import Fuse from "fuse.js";
 import CatalogItem from "./CatalogItem";
-import { useSelector } from "../../store";
-
+import { useDispatch, useSelector } from "../../store";
+import { setIsSubmitted } from "../../slices/filters";
 interface CatalogProps {
   items: Product[];
 }
 
-interface FilterSettings {
-  branchAll: boolean;
-  branchCurrent: boolean;
-  branchSpecific: boolean;
-  brandAll: boolean;
-  brandSpecific: boolean;
-  searchMerchant: boolean;
-  searchBranch: boolean;
-  searchDesignation: boolean;
-  searchAttributes: boolean;
-}
-
 const Catalog: FC<CatalogProps> = ({ items }) => {
-  const { filterSettings } = useSelector((state) => state.filters);
+  const dispatch = useDispatch();
+  const { filterSettings, isSubmitted, isSearchInFilterEmpty } = useSelector(
+    (state) => state.filters
+  );
   const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const {
     branchAll,
@@ -46,38 +39,64 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
     searchAttributes,
   } = filterSettings[0];
 
-  const handleOnSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+  const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+    dispatch(setIsSubmitted(false));
   };
 
-  const options = {
-    threshold: 0,
-    keys: [
-      `${searchMerchant && "merchantPartNumber"}`,
-      `${searchBranch && "branchPartNumber"}`,
-      "designation",
-      "attributes",
-    ],
+  const handleSearch = (event: any) => {
+    dispatch(setIsSubmitted(true));
+    if (event.key === "Enter" || event.type === "click") {
+      setSearchResults([]);
+      const options = {
+        includeScore: true,
+        shouldSort: false,
+        // threshold: 0,
+        keys: [
+          `${searchMerchant && "merchantPartNumber"}`,
+          `${searchBranch && "branchPartNumber"}`,
+          `${searchDesignation && "designation"}`,
+          `${searchAttributes && "attributes"}`,
+        ],
+      };
+
+      const fuse = new Fuse(items, options);
+      const results: any = fuse.search(query);
+      setSearchResults(results);
+      console.log("FUSE RESULT: ", results);
+    }
   };
-
-  const fuse = new Fuse(items, options);
-
-  const results: any = fuse.search(query);
-
-  console.log("FUSE RESULT: ", results);
 
   return (
     <>
       <FlexContainer>
-        <Box sx={{ p: "19px 38px 19px 38px", backgroundColor: "#F4F4F4" }}>
+        <Box
+          sx={{
+            p: "19px 38px 19px 38px",
+            backgroundColor: "#F4F4F4",
+            position: "relative",
+          }}
+        >
           <SearchField
+            id="search"
+            error={query === "" && isSubmitted ? true : false}
             placeholder="Search"
             value={query}
-            onChange={handleOnSearch}
+            onChange={handleChangeQuery}
+            onKeyDown={handleSearch}
           />
+          {query === "" && isSubmitted && (
+            <FormHelperText
+              sx={{ position: "absolute", bottom: 0, color: "#d62d24" }}
+              id="search"
+            >
+              This field is required
+            </FormHelperText>
+          )}
         </Box>
         <Box sx={{ ml: "37px" }}>
           <Button
+            onClick={handleSearch}
             variant="contained"
             color="secondary"
             disableElevation
@@ -90,14 +109,18 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
 
       <Box sx={{ p: "0 0 20px 20px", width: "1009px" }}>
         <List>
-          {query
-            ? results.map((item: any) => (
+          {isSubmitted && searchResults.length > 0 && (branchAll || brandAll)
+            ? searchResults.map((item: any) => (
                 <CatalogItem
                   key={item.item.productId}
                   productName={item.item.productName}
                   productDesc={item.item.productDesc}
                   isBoldBranchPartNumber={
-                    query === item.item.branchPartNumber ? true : false
+                    query === item.item.branchPartNumber &&
+                    isSubmitted &&
+                    searchBranch
+                      ? true
+                      : false
                   }
                   branchPartNumber={item.item.branchPartNumber}
                 />
@@ -129,10 +152,12 @@ const SearchField = styled(TextField)`
   && {
     background-color: #ffffff;
     margin-left: auto;
-    box-shadow: 1px -12px 0px -6px #000 inset;
+    box-shadow: 1px -12px 0px -6px
+      ${(props: any) => (props.error ? "#d62d24" : "#000")} inset;
     & fieldset {
       height: 50px;
-      border: none;
+      border-bottom: none;
+      border: ${(props: any) => (props.error ? "" : "none")};
     }
     & input {
       font-size: 0.9rem;

@@ -2,8 +2,14 @@ import React, { FC, useState, useEffect, useCallback } from "react";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import CheckedBoxIcon from "../../icons/CheckedBox";
 import UncheckedBoxIcon from "../../icons/UncheckedBox";
-import { useDispatch } from "../../store";
-import { saveFilterSettings } from "../../slices/filters";
+import { useDispatch, useSelector } from "../../store";
+import {
+  saveFilterSettings,
+  setIsSubmitted,
+  setIsBranchesFilterEmpty,
+  setIsBrandFilterEmpty,
+  setIsSearchInFilterEmpty,
+} from "../../slices/filters";
 
 const filterCriteria = [
   {
@@ -60,9 +66,14 @@ const filterCriteria = [
   },
 ];
 
-
 const Filters: FC = () => {
   const dispatch = useDispatch();
+  const {
+    isBranchesFilterEmpty,
+    isBrandFilterEmpty,
+    isSearchInFilterEmpty,
+    isSubmitted,
+  } = useSelector((state) => state.filters);
 
   const [isBranchesAll, setIsBranchesAll] = useState(false);
   const [isBranchesCurrent, setIsBranchesCurrent] = useState(false);
@@ -81,33 +92,52 @@ const Filters: FC = () => {
   const handleCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
+    // set specified filter and reset prior search, and check filters empty
     switch (value) {
       case "branch-all":
         setIsBranchesAll((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsBranchesFilterEmpty(false));
         break;
       case "branch-current":
         setIsBranchesCurrent((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsBranchesFilterEmpty(false));
         break;
       case "branch-specific":
         setIsBranchesSpecific((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsBranchesFilterEmpty(false));
         break;
       case "brand-all":
         setIsBrandAll((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsBrandFilterEmpty(false));
         break;
       case "brand-specific":
         setIsBrandSpecific((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsBrandFilterEmpty(false));
         break;
       case "search-merchant-num":
         setIsSearchInMerchantPartNumber((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsSearchInFilterEmpty(false));
         break;
       case "search-branch-num":
         setIsSearchInBranchPartNumber((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsSearchInFilterEmpty(false));
         break;
       case "search-designation":
         setIsSearchInDesignation((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsSearchInFilterEmpty(false));
         break;
       case "search-attributes":
         setIsSearchInAttributes((prev) => !prev);
+        dispatch(setIsSubmitted(false));
+        dispatch(setIsSearchInFilterEmpty(false));
         break;
     }
   };
@@ -126,6 +156,20 @@ const Filters: FC = () => {
         searchAttributes: isSearchInAttributes,
       })
     );
+    if (!isBranchesAll) {
+      dispatch(setIsBranchesFilterEmpty(true));
+    }
+    if (!isBrandAll) {
+      dispatch(setIsBrandFilterEmpty(true));
+    }
+    if (
+      !isSearchInAttributes &&
+      !isSearchInDesignation &&
+      !isSearchInBranchPartNumber &&
+      !isSearchInMerchantPartNumber
+    ) {
+      dispatch(setIsSearchInFilterEmpty(true));
+    }
   }, [
     dispatch,
     isBranchesAll,
@@ -176,6 +220,11 @@ const Filters: FC = () => {
           backgroundColor: "#F4F4F4",
           m: "0 0 19px 0",
           p: "23.5px 0 23.5px 25px",
+          boxShadow: `${
+            isSubmitted && (isBranchesFilterEmpty || isSearchInFilterEmpty)
+              ? "0 0 0 1px #d62d24 inset"
+              : ""
+          }`,
         }}
       >
         {filterCriteria.map(
@@ -193,6 +242,21 @@ const Filters: FC = () => {
                     xl: "1.47rem",
                   },
                   fontWeight: 300,
+                  color: `${
+                    criterion.title === "Branches" &&
+                    isBranchesFilterEmpty &&
+                    isSubmitted
+                      ? "#d62d24"
+                      : criterion.title === "Brand" &&
+                        isBrandFilterEmpty &&
+                        isSubmitted
+                      ? "#d62d24"
+                      : criterion.title === "Search in" &&
+                        isSearchInFilterEmpty &&
+                        isSubmitted
+                      ? "#d62d24"
+                      : ""
+                  }`,
                   ml: "10px",
                 }}
               >
@@ -217,7 +281,10 @@ const Filters: FC = () => {
                         onChange={handleCheckBox}
                         icon={
                           <UncheckedBoxIcon
-                            sx={{ fontSize: "15px", backgroundColor: "white" }}
+                            sx={{
+                              fontSize: "15px",
+                              backgroundColor: "white",
+                            }}
                           />
                         }
                         checkedIcon={
