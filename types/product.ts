@@ -3,9 +3,9 @@ export interface Product {
   productName: string;
   productDesc: string;
   branch: string;
-  branches: { name: string }[];
-  brand: string;
-  brands: { name: string }[] | null;
+  branches: { branch: string }[];
+  brand: string | null;
+  merchant: string;
   merchantPartNumber: string;
   branchPartNumber: string;
   designation: string[];
