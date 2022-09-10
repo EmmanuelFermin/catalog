@@ -62,6 +62,7 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
       const options = {
         includeScore: true,
         shouldSort: false,
+        useExtendedSearch: true,
         keys: [
           `${isSearchMerchantNum && "merchantPartNumber"}`,
           `${isSearchBranchNum && "branchPartNumber"}`,
@@ -71,7 +72,7 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
       };
 
       const fuse = new Fuse(items, options);
-      const results: any = fuse.search(query);
+      const results: any = fuse.search(`'${query}`);
       setSearchResults(results);
       console.log("FUSE RESULT: ", results);
     }
