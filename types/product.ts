@@ -7,6 +7,7 @@ export interface Product {
     branch: string;
     merchantPartNumber?: string;
     branchPartNumber?: string;
+    designation?: string[];
   }[];
   brand: string | null;
   merchant: string;

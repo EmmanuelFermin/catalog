@@ -6,17 +6,15 @@ import type { Product } from "../../types/product";
 import Fuse from "fuse.js";
 import CatalogItem from "./CatalogItem";
 import { useDispatch, useSelector } from "../../store";
-import { setIsSubmitted } from "../../slices/filters";
+import { setIsSubmitted, setQuery } from "../../slices/filters";
 interface CatalogProps {
   items: Product[];
 }
 
 const Catalog: FC<CatalogProps> = ({ items }) => {
   const dispatch = useDispatch();
-  const { filterSettings, isSubmitted, isSearchInFilterEmpty } = useSelector(
-    (state) => state.filters
-  );
-  const [query, setQuery] = useState("");
+  const { filterSettings, isSubmitted, isSearchInFilterEmpty, query } =
+    useSelector((state) => state.filters);
   const [searchResults, setSearchResults] = useState<any>([]);
 
   const {
@@ -32,37 +30,19 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
   } = filterSettings[0];
 
   const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
+    dispatch(setQuery(event.target.value));
     dispatch(setIsSubmitted(false));
   };
 
-  // const nextBiggest = (arr: any) => {
-  //   let max = -Infinity, result = -Infinity;
-
-  //   for (const value of arr) {
-  //     const nr = Number(value)
-
-  //     if (nr > max) {
-  //       [result, max] = [max, nr] // save previous max
-  //     } else if (nr < max && nr > result) {
-  //       result = nr; // new second biggest
-  //     }
-  //   }
-
-  //   return result;
-  // }
-
-  // const arr = ['2.220446049250313e-16','0.375','0.375','0.001'];
-  // console.log("2nd Biggest Score ",nextBiggest(arr));
-
   const handleSearch = (event: any) => {
-    dispatch(setIsSubmitted(true));
     if (event.key === "Enter" || event.type === "click") {
       setSearchResults([]);
       const options = {
         includeScore: true,
+        includeMatches: true,
         shouldSort: false,
         useExtendedSearch: true,
+        findAllMatches: true,
         keys: [
           `${isSearchMerchantNum && "merchantPartNumber"}`,
           `${isSearchBranchNum && "branchPartNumber"}`,
@@ -72,9 +52,12 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
       };
 
       const fuse = new Fuse(items, options);
-      const results: any = fuse.search(`'${query}`);
+      const results: any = fuse.search(`^${query} | ${query}$`);
       setSearchResults(results);
       console.log("FUSE RESULT: ", results);
+      dispatch(setIsSubmitted(true));
+    } else {
+      return;
     }
   };
 
@@ -163,6 +146,11 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                       : false
                   }
                   isFilterSearchBranchNum={isSearchBranchNum}
+                  designation={item.item.designation.find((el: string) =>
+                    el.toLowerCase().includes(query.toLowerCase())
+                  )}
+                  isFilterSearchDesignation={isSearchDesignation}
+                  indices={item.matches[0].indices}
                 />
               ))
             : items.map((item: any) => (
@@ -177,6 +165,10 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   branches={item.branches}
                   branchPartNumber={item.branchPartNumber}
                   isFilterSearchBranchNum={isSearchBranchNum}
+                  designation={item.designation.find((el: string) =>
+                    el.toLowerCase().includes(query.toLowerCase())
+                  )}
+                  isFilterSearchDesignation={isSearchDesignation}
                 />
               ))}
         </List>

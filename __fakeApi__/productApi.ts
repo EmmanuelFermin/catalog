@@ -11,17 +11,37 @@ class ProductsApi {
           "Distribution or mini-break-out cable suitable for use in many indoor and outdoor applications. Features new and improved ES9 tight buffer. Typical applications include LAN and WAN backbones...",
         branch: "Your",
         branches: [
-          { branch: "Catalog1", merchantPartNumber: "60019533" },
-          { branch: "Catalog2", merchantPartNumber: "60019533" },
-          { branch: "Catalog3", merchantPartNumber: "60019533" },
-          { branch: "Catalog4", merchantPartNumber: "60019533" },
-          { branch: "Catalog5", merchantPartNumber: "60019533" },
+          {
+            branch: "Catalog1",
+            merchantPartNumber: "60019533",
+            designation: ["indoor", "outdoor", "LAN", "WAN"],
+          },
+          {
+            branch: "Catalog2",
+            merchantPartNumber: "60019533",
+            designation: ["Indoor", "Outdoor", "LAN", "WAN"],
+          },
+          {
+            branch: "Catalog3",
+            merchantPartNumber: "60019533",
+            designation: ["Indoor", "Outdoor", "LAN", "WAN"],
+          },
+          {
+            branch: "Catalog4",
+            merchantPartNumber: "60019533",
+            designation: ["Indoor", "Outdoor", "LAN", "WAN"],
+          },
+          {
+            branch: "Catalog5",
+            merchantPartNumber: "60019533",
+            designation: ["Indoor", "Outdoor", "LAN", "WAN"],
+          },
         ],
         branchPartNumber: "60011222",
         merchant: "M12312",
         merchantPartNumber: "60019533",
         brand: null,
-        designation: ["indoor", "outdoor", "LAN", "WAN"],
+        designation: ["Indoor", "Outdoor", "LAN", "WAN"],
         attributes: [
           { name: "OM3", value: "50/125" },
           { name: "MM", value: "16" },
@@ -37,14 +57,22 @@ class ProductsApi {
           "This standard series of Lande cabinets provides an ideal environment for housing server and IT equipment, available from 26U to 47U and up to 1200mm deep.",
         branch: "Your",
         branches: [
-          { branch: "Catalog1", branchPartNumber: "DAT60019533" },
-          { branch: "Catalog2", branchPartNumber: "DAT60019533" },
+          {
+            branch: "Catalog1",
+            branchPartNumber: "DAT60019533",
+            designation: ["Housing server", "IT equipment"],
+          },
+          {
+            branch: "Catalog2",
+            branchPartNumber: "DAT60019533",
+            designation: ["Housing server", "IT equipment"],
+          },
         ],
         branchPartNumber: "DAT60019533",
         merchant: "M220000",
         merchantPartNumber: "60022333",
         brand: "Lande",
-        designation: ["housing server", "IT equipment"],
+        designation: ["Housing server", "IT equipment"],
         attributes: [
           { name: "Min Height", value: "26U" },
           { name: "Max Height", value: "47U" },
@@ -64,18 +92,46 @@ class ProductsApi {
           "The metal content cable tie is designed for use in the food and pharmaceutical processing industries. A unique manufacturing process, involving the inclusion of a metallic pigment.",
         branch: "Comtec",
         branches: [
-          { branch: "Catalog1", branchPartNumber: "60019533" },
-          { branch: "Catalog2", branchPartNumber: "60019533" },
-          { branch: "Catalog3", branchPartNumber: "60019533" },
-          { branch: "Catalog4", branchPartNumber: "60019533" },
+          {
+            branch: "Catalog1",
+            branchPartNumber: "60019533",
+            designation: [
+              "Food processing industry",
+              "Pharmaceutical processing industry",
+            ],
+          },
+          {
+            branch: "Catalog2",
+            branchPartNumber: "60019533",
+            designation: [
+              "Food processing industry",
+              "Pharmaceutical processing industry",
+            ],
+          },
+          {
+            branch: "Catalog3",
+            branchPartNumber: "60019533",
+            designation: [
+              "Food processing industry",
+              "Pharmaceutical processing industry",
+            ],
+          },
+          {
+            branch: "Catalog4",
+            branchPartNumber: "60019533",
+            designation: [
+              "Food processing industry",
+              "Pharmaceutical processing industry",
+            ],
+          },
         ],
         branchPartNumber: "60019533",
         merchant: "M330000",
         merchantPartNumber: "60033444",
         brand: null,
         designation: [
-          "food processing industry",
-          "pharmaceutical processing industry",
+          "Food processing industry",
+          "Pharmaceutical processing industry",
         ],
         attributes: [
           {
@@ -93,12 +149,18 @@ class ProductsApi {
         productDesc:
           "Fluke Networks DSX2-5000 copper cabling certifier. Tests up to TIA Cat6A or ISO/IEC Class FA. Full Cat5e/6 2-way autotest in 9 seconds. Full Cat6A. 2-way autotest in just 10 seconds. WiFi enabled",
         branch: "Comtec",
-        branches: [{ branch: "Catalog1", merchantPartNumber: "60019533LA01" }],
+        branches: [
+          {
+            branch: "Catalog1",
+            merchantPartNumber: "60019533LA01",
+            designation: ["Network", "Network test"],
+          },
+        ],
         branchPartNumber: "60044555",
         merchant: "M23331",
         merchantPartNumber: "60019533LA01",
         brand: "Fluke Networks",
-        designation: ["network"],
+        designation: ["Network", "Network test"],
         attributes: [
           {
             name: "Integrated WiFi",

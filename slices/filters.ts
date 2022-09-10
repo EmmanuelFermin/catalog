@@ -20,6 +20,7 @@ interface FilterSettingsState {
   isBranchesFilterEmpty: boolean;
   isBrandFilterEmpty: boolean;
   isSearchInFilterEmpty: boolean;
+  query: string;
 }
 
 const initialState: FilterSettingsState = {
@@ -40,6 +41,7 @@ const initialState: FilterSettingsState = {
   isBranchesFilterEmpty: true,
   isBrandFilterEmpty: true,
   isSearchInFilterEmpty: true,
+  query: "",
 };
 
 const slice = createSlice({
@@ -61,6 +63,9 @@ const slice = createSlice({
     },
     setIsSearchInFilterEmpty(state, action) {
       state.isSearchInFilterEmpty = action.payload;
+    },
+    setQuery(state, action) {
+      state.query = action.payload;
     },
   },
 });
@@ -95,6 +100,12 @@ export const setIsSearchInFilterEmpty =
   (filterValue: boolean) =>
   (dispatch: any): void => {
     dispatch(slice.actions.setIsSearchInFilterEmpty(filterValue));
+  };
+
+export const setQuery =
+  (enteredVal: string) =>
+  (dispatch: any): void => {
+    dispatch(slice.actions.setQuery(enteredVal));
   };
 
 export default slice;

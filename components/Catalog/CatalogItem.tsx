@@ -23,7 +23,31 @@ interface CatalogProps {
   boldExactBranchPartNumber?: boolean;
   boldAllMatchBranchPartNumber?: boolean;
   isFilterSearchBranchNum: boolean;
+  designation: string[];
+  isFilterSearchDesignation: boolean;
+  indices?: [number[]];
 }
+
+const boldTheQuery = (
+  query: string,
+  mainText: string,
+  indices: [number[]]
+): JSX.Element => {
+  const extractedQuery = mainText.slice(indices[0][0], indices[0][1] + 1);
+  const remaining = mainText.slice(
+    query.length - mainText.length,
+    mainText.length
+  );
+
+  const combined = (
+    <>
+      <Box sx={{ fontWeight: 500 }}>{extractedQuery}</Box>
+      {query.length === mainText.length ? "" : remaining}
+    </>
+  );
+
+  return combined;
+};
 
 const CatalogItem: FC<CatalogProps> = ({
   productName,
@@ -39,8 +63,11 @@ const CatalogItem: FC<CatalogProps> = ({
   boldExactBranchPartNumber,
   boldAllMatchBranchPartNumber,
   isFilterSearchBranchNum,
+  designation,
+  isFilterSearchDesignation,
+  indices,
 }) => {
-  const { isSubmitted } = useSelector((state) => state.filters);
+  const { isSubmitted, query } = useSelector((state) => state.filters);
   const currentBranch = "Your";
 
   let resultMsg: JSX.Element = <></>;
@@ -48,7 +75,11 @@ const CatalogItem: FC<CatalogProps> = ({
 
   const isCurrentBranchAndExactMerchantNumber =
     currentBranch === branch && boldExactMerchantPartNumber;
+  const isCurrentBranchAndExactBranchNumber =
+    currentBranch === branch && boldExactBranchPartNumber;
 
+  const isCurrentBranchAndAllMatchMerchantNumber =
+    currentBranch === branch && boldAllMatchMerchantPartNumber;
   const isCurrentBranchAndAllMatchBranchNumber =
     currentBranch === branch && boldAllMatchBranchPartNumber;
 
@@ -57,18 +88,24 @@ const CatalogItem: FC<CatalogProps> = ({
   const isNotCurrentBranchAndAllMatchMerchantNumber =
     currentBranch !== branch && boldAllMatchMerchantPartNumber;
 
+  const isNotCurrentBranchAndAllMatchBranchNumber =
+    currentBranch !== branch && boldAllMatchBranchPartNumber;
+
   // Prioritize Current Branch/Catalog MERCHANT
   if (
     (isFilterSearchMerchantNum &&
       isSubmitted &&
       isCurrentBranchAndExactMerchantNumber) ||
+    isCurrentBranchAndAllMatchMerchantNumber ||
     isNotCurrentBranchAndAllMatchMerchantNumber
   ) {
     resultMsg = (
       <Fragment>
         <ResultMsg component="p">{`Manufacturer ${merchant} Part Number :`}</ResultMsg>
-        <MerchantPartNum component="p" isfound={boldAllMatchMerchantPartNumber}>
-          {merchantPartNumber}
+        {/* isfound={boldAllMatchMerchantPartNumber} */}
+        <MerchantPartNum component="p">
+          {/* {merchantPartNumber} */}
+          {boldTheQuery(query, merchantPartNumber, indices!)}
         </MerchantPartNum>
       </Fragment>
     );
@@ -88,7 +125,9 @@ const CatalogItem: FC<CatalogProps> = ({
     (isFilterSearchBranchNum &&
       isSubmitted &&
       isCurrentBranchAndAllMatchBranchNumber) ||
-    isNotCurrentBranchAndExactBranchNumber
+    isCurrentBranchAndExactBranchNumber ||
+    isNotCurrentBranchAndExactBranchNumber ||
+    isNotCurrentBranchAndAllMatchBranchNumber
   ) {
     resultMsg = (
       <Fragment>
@@ -117,6 +156,26 @@ const CatalogItem: FC<CatalogProps> = ({
       );
     }
   }
+
+  // // Prioritize Current Branch/Catalogs DESIGNATION
+  // if (isFilterSearchDesignation && isSubmitted) {
+  //   resultMsg = (
+  //     <Fragment>
+  //       <ResultMsg component="p">{`${branch} catalog Designation :`}</ResultMsg>
+  //       <Designation component="p" isfound={boldAllMatchBranchPartNumber}>
+  //         {designation}
+  //       </Designation>
+  //     </Fragment>
+  //   );
+
+  //   resultLocation = (
+  //     <ResultLocation component="p">
+  //       {`Found in ${branch.toLowerCase()} catalog and ${branches.length} ${
+  //         branches.length > 1 ? "others" : "other"
+  //       }`}
+  //     </ResultLocation>
+  //   );
+  // }
 
   return (
     <ListItem>
@@ -196,13 +255,23 @@ const ResultLocation = styled(Typography)`
 const MerchantPartNum = styled(Typography)`
   && {
     font-size: 1.1rem;
+    font-weight: 300;
+    color: #797777;
+    letter-spacing: 0.74px;
+    display: flex;
+  }
+`;
+
+const BranchPartNum = styled(Typography)`
+  && {
+    font-size: 1.1rem;
     font-weight: ${(props: any) => (props.isfound ? 500 : 300)};
     color: #797777;
     letter-spacing: 0.74px;
   }
 `;
 
-const BranchPartNum = styled(Typography)`
+const Designation = styled(Typography)`
   && {
     font-size: 1.1rem;
     font-weight: ${(props: any) => (props.isfound ? 500 : 300)};
