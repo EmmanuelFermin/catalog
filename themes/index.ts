@@ -25,6 +25,9 @@ export const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: `
+      body {
+       overflow-y: overlay;
+      }
       @font-face {
         font-family: 'Fielder';
         font-style: normal;
