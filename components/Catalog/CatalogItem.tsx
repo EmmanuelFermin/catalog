@@ -2,6 +2,7 @@ import React, { FC, Fragment } from "react";
 import { Box, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useSelector } from "../../store";
+import { LiveTvSharp } from "@mui/icons-material";
 
 type Branches = {
   branch: string;
@@ -33,18 +34,31 @@ const boldTheQuery = (
   mainText: string,
   indices: [number[]]
 ): JSX.Element => {
+  // Extracts query depending on the provided range
   const extractedQuery = mainText.slice(indices[0][0], indices[0][1] + 1);
-  const remaining = mainText.slice(
-    query.length - mainText.length,
-    mainText.length
-  );
 
-  const combined = (
-    <>
-      <Box sx={{ fontWeight: 500 }}>{extractedQuery}</Box>
-      {query.length === mainText.length ? "" : remaining}
-    </>
-  );
+  let remaining: string;
+  let combined: JSX.Element = <></>;
+
+  //Bolds the query located at the end of text
+  if (indices[0][0] > 1) {
+    remaining = mainText.slice(0, mainText.length - query.length);
+    combined = (
+      <>
+        {query.length === mainText.length ? "" : remaining}
+        <Box sx={{ fontWeight: 500 }}>{extractedQuery}</Box>
+      </>
+    );
+  } else {
+    //Bolds the query located at the start of text
+    remaining = mainText.slice(query.length - mainText.length, mainText.length);
+    combined = (
+      <>
+        <Box sx={{ fontWeight: 500 }}>{extractedQuery}</Box>
+        {query.length === mainText.length ? "" : remaining}
+      </>
+    );
+  }
 
   return combined;
 };
@@ -102,9 +116,7 @@ const CatalogItem: FC<CatalogProps> = ({
     resultMsg = (
       <Fragment>
         <ResultMsg component="p">{`Manufacturer ${merchant} Part Number :`}</ResultMsg>
-        {/* isfound={boldAllMatchMerchantPartNumber} */}
         <MerchantPartNum component="p">
-          {/* {merchantPartNumber} */}
           {boldTheQuery(query, merchantPartNumber, indices!)}
         </MerchantPartNum>
       </Fragment>
@@ -132,8 +144,11 @@ const CatalogItem: FC<CatalogProps> = ({
     resultMsg = (
       <Fragment>
         <ResultMsg component="p">{`${branch} catalog Part Number :`}</ResultMsg>
-        <BranchPartNum component="p" isfound={boldAllMatchBranchPartNumber}>
+        {/* <BranchPartNum component="p" isfound={boldAllMatchBranchPartNumber}>
           {branchPartNumber}
+        </BranchPartNum> */}
+        <BranchPartNum component="p">
+          {boldTheQuery(query, branchPartNumber, indices!)}
         </BranchPartNum>
       </Fragment>
     );
@@ -268,6 +283,7 @@ const BranchPartNum = styled(Typography)`
     font-weight: ${(props: any) => (props.isfound ? 500 : 300)};
     color: #797777;
     letter-spacing: 0.74px;
+    display: flex;
   }
 `;
 
