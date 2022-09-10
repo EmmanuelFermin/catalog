@@ -1,13 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  FormHelperText,
-  List,
-  ListItem,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, FormHelperText, List, TextField } from "@mui/material";
 import GoSearchIcon from "../../icons/GoSearch";
 import styled from "styled-components";
 import type { Product } from "../../types/product";
@@ -25,24 +17,43 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
     (state) => state.filters
   );
   const [query, setQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<any>([]);
 
   const {
-    branchAll,
-    branchCurrent,
-    branchSpecific,
-    brandAll,
-    brandSpecific,
-    searchMerchant,
-    searchBranch,
-    searchDesignation,
-    searchAttributes,
+    isBranchAll,
+    isBranchCurrent,
+    isBranchSpecific,
+    isBrandAll,
+    isBrandSpecific,
+    isSearchMerchantNum,
+    isSearchBranchNum,
+    isSearchDesignation,
+    isSearchAttributes,
   } = filterSettings[0];
 
   const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
     dispatch(setIsSubmitted(false));
   };
+
+  // const nextBiggest = (arr: any) => {
+  //   let max = -Infinity, result = -Infinity;
+
+  //   for (const value of arr) {
+  //     const nr = Number(value)
+
+  //     if (nr > max) {
+  //       [result, max] = [max, nr] // save previous max
+  //     } else if (nr < max && nr > result) {
+  //       result = nr; // new second biggest
+  //     }
+  //   }
+
+  //   return result;
+  // }
+
+  // const arr = ['2.220446049250313e-16','0.375','0.375','0.001'];
+  // console.log("2nd Biggest Score ",nextBiggest(arr));
 
   const handleSearch = (event: any) => {
     dispatch(setIsSubmitted(true));
@@ -51,12 +62,11 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
       const options = {
         includeScore: true,
         shouldSort: false,
-        // threshold: 0,
         keys: [
-          `${searchMerchant && "merchantPartNumber"}`,
-          `${searchBranch && "branchPartNumber"}`,
-          `${searchDesignation && "designation"}`,
-          `${searchAttributes && "attributes"}`,
+          `${isSearchMerchantNum && "merchantPartNumber"}`,
+          `${isSearchBranchNum && "branchPartNumber"}`,
+          `${isSearchDesignation && "designation"}`,
+          `${isSearchAttributes && "attributes"}`,
         ],
       };
 
@@ -109,20 +119,49 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
 
       <Box sx={{ p: "0 0 20px 20px", width: "1009px" }}>
         <List>
-          {isSubmitted && searchResults.length > 0 && (branchAll || brandAll)
+          {isSubmitted &&
+          searchResults.length > 0 &&
+          (isBranchAll || isBrandAll)
             ? searchResults.map((item: any) => (
                 <CatalogItem
                   key={item.item.productId}
                   productName={item.item.productName}
                   productDesc={item.item.productDesc}
-                  isBoldBranchPartNumber={
-                    query === item.item.branchPartNumber &&
+                  merchant={item.item.merchant}
+                  merchantPartNumber={item.item.merchantPartNumber}
+                  boldExactMerchantPartNumber={
+                    query === item.item.merchantPartNumber &&
                     isSubmitted &&
-                    searchBranch
+                    isSearchMerchantNum
                       ? true
                       : false
                   }
+                  boldAllMatchMerchantPartNumber={
+                    item.item.merchantPartNumber.includes(query) &&
+                    isSubmitted &&
+                    isSearchMerchantNum
+                      ? true
+                      : false
+                  }
+                  isFilterSearchMerchantNum={isSearchMerchantNum}
+                  branch={item.item.branch}
+                  branches={item.item.branches}
                   branchPartNumber={item.item.branchPartNumber}
+                  boldExactBranchPartNumber={
+                    query === item.item.branchPartNumber &&
+                    isSubmitted &&
+                    isSearchBranchNum
+                      ? true
+                      : false
+                  }
+                  boldAllMatchBranchPartNumber={
+                    item.item.branchPartNumber.includes(query) &&
+                    isSubmitted &&
+                    isSearchBranchNum
+                      ? true
+                      : false
+                  }
+                  isFilterSearchBranchNum={isSearchBranchNum}
                 />
               ))
             : items.map((item: any) => (
@@ -130,8 +169,13 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   key={item.productId}
                   productName={item.productName}
                   productDesc={item.productDesc}
-                  isBoldBranchPartNumber={false}
+                  merchant={item.merchant}
+                  merchantPartNumber={item.merchantPartNumber}
+                  isFilterSearchMerchantNum={isSearchMerchantNum}
+                  branch={item.branch}
+                  branches={item.branches}
                   branchPartNumber={item.branchPartNumber}
+                  isFilterSearchBranchNum={isSearchBranchNum}
                 />
               ))}
         </List>

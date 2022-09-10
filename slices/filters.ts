@@ -3,15 +3,15 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { AppThunk } from "../store";
 
 interface FilterSettings {
-  branchAll: boolean;
-  branchCurrent: boolean;
-  branchSpecific: boolean;
-  brandAll: boolean;
-  brandSpecific: boolean;
-  searchMerchant: boolean;
-  searchBranch: boolean;
-  searchDesignation: boolean;
-  searchAttributes: boolean;
+  isBranchAll: boolean;
+  isBranchCurrent: boolean;
+  isBranchSpecific: boolean;
+  isBrandAll: boolean;
+  isBrandSpecific: boolean;
+  isSearchMerchantNum: boolean;
+  isSearchBranchNum: boolean;
+  isSearchDesignation: boolean;
+  isSearchAttributes: boolean;
 }
 
 interface FilterSettingsState {
@@ -25,15 +25,15 @@ interface FilterSettingsState {
 const initialState: FilterSettingsState = {
   filterSettings: [
     {
-      branchAll: false,
-      branchCurrent: false,
-      branchSpecific: false,
-      brandAll: false,
-      brandSpecific: false,
-      searchMerchant: false,
-      searchBranch: false,
-      searchDesignation: false,
-      searchAttributes: false,
+      isBranchAll: false,
+      isBranchCurrent: false,
+      isBranchSpecific: false,
+      isBrandAll: false,
+      isBrandSpecific: false,
+      isSearchMerchantNum: false,
+      isSearchBranchNum: false,
+      isSearchDesignation: false,
+      isSearchAttributes: false,
     },
   ],
   isSubmitted: false,

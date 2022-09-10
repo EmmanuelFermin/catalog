@@ -145,15 +145,15 @@ const Filters: FC = () => {
   const pushFilterSettings = useCallback(() => {
     dispatch(
       saveFilterSettings({
-        branchAll: isBranchesAll,
-        branchCurrent: isBranchesCurrent,
-        branchSpecific: isBranchesSpecific,
-        brandAll: isBrandAll,
-        brandSpecific: isBrandSpecific,
-        searchMerchant: isSearchInMerchantPartNumber,
-        searchBranch: isSearchInBranchPartNumber,
-        searchDesignation: isSearchInDesignation,
-        searchAttributes: isSearchInAttributes,
+        isBranchAll: isBranchesAll,
+        isBranchCurrent: isBranchesCurrent,
+        isBranchSpecific: isBranchesSpecific,
+        isBrandAll: isBrandAll,
+        isBrandSpecific: isBrandSpecific,
+        isSearchMerchantNum: isSearchInMerchantPartNumber,
+        isSearchBranchNum: isSearchInBranchPartNumber,
+        isSearchDesignation: isSearchInDesignation,
+        isSearchAttributes: isSearchInAttributes,
       })
     );
     if (!isBranchesAll) {

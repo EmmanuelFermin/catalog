@@ -3,11 +3,15 @@ export interface Product {
   productName: string;
   productDesc: string;
   branch: string;
-  branches: { branch: string }[];
+  branches: {
+    branch: string;
+    merchantPartNumber?: string;
+    branchPartNumber?: string;
+  }[];
   brand: string | null;
   merchant: string;
-  merchantPartNumber: string;
-  branchPartNumber: string;
+  merchantPartNumber?: string;
+  branchPartNumber?: string;
   designation: string[];
   attributes: { name: string; value: string }[];
 }
