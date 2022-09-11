@@ -14,6 +14,10 @@ export default ContainerBody;
 
 const StyledContainer = styled(Box)`
   && {
+    padding-top: 120px;
+    padding-left: 64px;
+    padding-right: 65px;
+
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
       && {

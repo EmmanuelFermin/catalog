@@ -153,6 +153,10 @@ export default DrawerAppBar;
 
 const StyledToolbar = styled(Toolbar)`
   && {
+    padding-left: 64px;
+    padding-right: 65px;
+    height: 74px;
+
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
       && {
@@ -226,6 +230,8 @@ const SearchField = styled(TextField)`
       border: none;
     }
     & input {
+      width: 630px;
+      height: 15px;
       font-size: 1.4375rem;
       color: #797777;
       &::placeholder {

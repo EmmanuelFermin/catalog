@@ -123,7 +123,15 @@ const CatalogItem: FC<CatalogProps> = ({
       <>
         <ResultMsg
           component="p"
-          isExactlyFound={isCurrentBranchAndExactMerchantNumber}
+          isExactlyFound={
+            isCurrentBranchAndExactMerchantNumber ||
+            (isFilterSearchMerchantNum &&
+              !isFilterSearchBranchNum &&
+              isNotCurrentBranchAndExactMerchantNumber) ||
+            (isFilterSearchMerchantNum &&
+              isFilterSearchBranchNum &&
+              isNotCurrentBranchAndExactMerchantNumber)
+          }
         >{`Manufacturer ${merchant} Part Number :`}</ResultMsg>
         <MerchantPartNum component="p">
           {boldTheQuery(
@@ -139,7 +147,15 @@ const CatalogItem: FC<CatalogProps> = ({
     resultLocation = (
       <ResultLocation
         component="p"
-        isExactlyFound={isCurrentBranchAndExactMerchantNumber}
+        isExactlyFound={
+          isCurrentBranchAndExactMerchantNumber ||
+          (isFilterSearchMerchantNum &&
+            !isFilterSearchBranchNum &&
+            isNotCurrentBranchAndExactMerchantNumber) ||
+          (isFilterSearchMerchantNum &&
+            isFilterSearchBranchNum &&
+            isNotCurrentBranchAndExactMerchantNumber)
+        }
       >
         {`Found in ${
           currentBranch === branch ? branch.toLowerCase() : branch
@@ -166,10 +182,7 @@ const CatalogItem: FC<CatalogProps> = ({
           isExactlyFound={
             ((isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
               (isCurrentBranchAndExactMerchantNumber ||
-                isCurrentBranchAndExactBranchNumber)) ||
-            (isFilterSearchBranchNum &&
-              !isFilterSearchMerchantNum &&
-              isCurrentBranchAndAllMatchBranchNumber)
+                isCurrentBranchAndExactBranchNumber))
           }
         >{`${branch} catalog Part Number :`}</ResultMsg>
         <BranchPartNum component="p">
@@ -201,10 +214,7 @@ const CatalogItem: FC<CatalogProps> = ({
           isExactlyFound={
             ((isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
               (isCurrentBranchAndExactMerchantNumber ||
-                isCurrentBranchAndExactBranchNumber)) ||
-            (isFilterSearchBranchNum &&
-              !isFilterSearchMerchantNum &&
-              isCurrentBranchAndAllMatchBranchNumber)
+                isCurrentBranchAndExactBranchNumber))
           }
         >
           {`Found in ${branch.toLowerCase()} catalog and ${branches.length} ${
@@ -269,11 +279,11 @@ const CatalogItem: FC<CatalogProps> = ({
               ((isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
                 (isCurrentBranchAndExactMerchantNumber ||
                   isCurrentBranchAndExactBranchNumber)) ||
-              (isFilterSearchBranchNum &&
-                !isFilterSearchMerchantNum &&
-                isCurrentBranchAndAllMatchBranchNumber) ||
               (isFilterSearchMerchantNum &&
                 !isFilterSearchBranchNum &&
+                isNotCurrentBranchAndExactMerchantNumber) ||
+              (isFilterSearchMerchantNum &&
+                isFilterSearchBranchNum &&
                 isNotCurrentBranchAndExactMerchantNumber)
                 ? 400
                 : 300

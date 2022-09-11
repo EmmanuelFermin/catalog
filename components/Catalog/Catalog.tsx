@@ -197,6 +197,10 @@ const SearchField = styled(TextField)`
       border: ${(props: any) => (props.error ? "" : "none")};
     }
     & input {
+      width: 900px;
+      font-size: 18px;
+      font-weight: 500;
+      height: 14px;
       font-size: 0.9rem;
       color: #000000;
       font-weight: 500;
@@ -231,7 +235,7 @@ const SearchField = styled(TextField)`
         /* PLACEHOLDER Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1200px) {
           && {
-            font-size: 1.2187rem;
+            font-size: 1.2rem;
           }
         }
 
