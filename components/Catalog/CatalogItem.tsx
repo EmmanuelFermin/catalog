@@ -31,7 +31,7 @@ interface CatalogProps {
   indices?: [number[]];
 }
 
-const boldTheQuery = (
+const superBoldTheQuery = (
   query: string,
   mainText: string,
   indices: [number[]],
@@ -115,7 +115,7 @@ const CatalogItem: FC<CatalogProps> = ({
   const isNotCurrentBranchAndAllMatchBranchNumber =
     currentBranch !== branch && boldAllMatchBranchPartNumber;
 
-  // FILTER BY MERCHANT NUM CONDITIONS
+  // FILTER BY MERCHANT NUM ADDITIONAL CONDITIONS
   const notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum: boolean =
     notInCurrBranchAndIsFilterSearchInMerchNumNotBranchNumWithExactQuery(
       isFilterSearchMerchantNum,
@@ -142,31 +142,23 @@ const CatalogItem: FC<CatalogProps> = ({
       <>
         <ResultMsg
           component="p"
-          isExactlyFound={
-            isCurrentBranchAndExactMerchantNumber ||
-            notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum ||
-            notInCurrBranch_IsFilterSearchInMerchantAndBranchNum_WithExactMerchNum
-          }
+          isExactlyFound={isCurrentBranchAndExactMerchantNumber}
         >{`Manufacturer ${merchant} Part Number :`}</ResultMsg>
         <MerchantPartNum component="p">
-          {boldTheQuery(
+          {superBoldTheQuery(
             query,
             merchantPartNumber,
             indices!,
-            isCurrentBranchAndExactMerchantNumber ||
-              isNotCurrentBranchAndExactMerchantNumber
+            isCurrentBranchAndExactMerchantNumber
           )}
         </MerchantPartNum>
       </>
     );
+
     resultLocation = (
       <ResultLocation
         component="p"
-        isExactlyFound={
-          isCurrentBranchAndExactMerchantNumber ||
-          notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum ||
-          notInCurrBranch_IsFilterSearchInMerchantAndBranchNum_WithExactMerchNum
-        }
+        isExactlyFound={isCurrentBranchAndExactMerchantNumber}
       >
         {`Found in ${
           currentBranch === branch ? branch.toLowerCase() : branch
@@ -179,25 +171,21 @@ const CatalogItem: FC<CatalogProps> = ({
 
   // Result Message and Location BRANCH ------------
   if (
-    (isFilterSearchBranchNum &&
-      isSubmitted &&
-      isCurrentBranchAndAllMatchBranchNumber) ||
-    isCurrentBranchAndExactBranchNumber ||
-    isNotCurrentBranchAndExactBranchNumber ||
-    isNotCurrentBranchAndAllMatchBranchNumber
+    isFilterSearchBranchNum &&
+    isSubmitted &&
+    (isCurrentBranchAndAllMatchBranchNumber ||
+      isCurrentBranchAndExactBranchNumber ||
+      isNotCurrentBranchAndExactBranchNumber ||
+      isNotCurrentBranchAndAllMatchBranchNumber)
   ) {
     resultMsg = (
       <Fragment>
         <ResultMsg
           component="p"
-          isExactlyFound={
-            (isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
-            (isCurrentBranchAndExactMerchantNumber ||
-              isCurrentBranchAndExactBranchNumber)
-          }
+          isExactlyFound={isCurrentBranchAndExactBranchNumber}
         >{`${branch} catalog Part Number :`}</ResultMsg>
         <BranchPartNum component="p">
-          {boldTheQuery(
+          {superBoldTheQuery(
             query,
             branchPartNumber,
             indices!,
@@ -287,11 +275,9 @@ const CatalogItem: FC<CatalogProps> = ({
               xl: "1.1rem",
             },
             fontWeight: `${
-              ((isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
-                (isCurrentBranchAndExactMerchantNumber ||
-                  isCurrentBranchAndExactBranchNumber)) ||
-              notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum ||
-              notInCurrBranch_IsFilterSearchInMerchantAndBranchNum_WithExactMerchNum
+              (isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
+              (isCurrentBranchAndExactMerchantNumber ||
+                isCurrentBranchAndExactBranchNumber)
                 ? 400
                 : 300
             }`,
