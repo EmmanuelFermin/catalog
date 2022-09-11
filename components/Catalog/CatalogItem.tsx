@@ -3,7 +3,7 @@ import { Box, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useSelector } from "../../store";
 import {
-  notInCurrBranchIsFilterSearchInMerchNumNotBranchNumWithExactQuery,
+  notInCurrBranchAndIsFilterSearchInMerchNumNotBranchNumWithExactQuery,
   notInCurBranchAndIsFilterSearchInMerchantAndBranchNumWithExactQuery,
 } from "../../utils/CatalogFilterConditions/Merchant";
 
@@ -117,7 +117,7 @@ const CatalogItem: FC<CatalogProps> = ({
 
   // FILTER BY MERCHANT NUM CONDITIONS
   const notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum: boolean =
-    notInCurrBranchIsFilterSearchInMerchNumNotBranchNumWithExactQuery(
+    notInCurrBranchAndIsFilterSearchInMerchNumNotBranchNumWithExactQuery(
       isFilterSearchMerchantNum,
       isFilterSearchBranchNum,
       isNotCurrentBranchAndExactMerchantNumber
