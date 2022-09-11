@@ -1,8 +1,5 @@
 import React, { FC } from "react";
-import {
-  Badge,
-  IconButton,
-} from "@mui/material";
+import { Badge, IconButton } from "@mui/material";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -49,20 +46,26 @@ const StyledBadge = styled(Badge)`
 
       /* Large devices (laptops/desktops, 900px and up) */
       @media only screen and (min-width: 900px) {
-        right: 0px;
-        top: 0px;
+        && {
+          right: 0px;
+          top: 0px;
+        }
       }
 
       /* Extra large devices (large laptops and desktops, 1200px and up) */
       @media only screen and (min-width: 1200px) {
-        right: 0px;
-        top: 0px;
+        && {
+          right: 0px;
+          top: 0px;
+        }
       }
 
       /* Extra Extra large devices (large laptops and desktops, 1536px and up) */
       @media only screen and (min-width: 1536px) {
-        right: 1px;
-        top: 1px;
+        && {
+          right: 1px;
+          top: 1px;
+        }
       }
     }
   }

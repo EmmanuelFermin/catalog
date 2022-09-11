@@ -209,64 +209,84 @@ const SearchField = styled(TextField)`
 
         /* PLACEHOLDER Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
-          font-size: 1rem;
+          && {
+            font-size: 1rem;
+          }
         }
 
         /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 600px) {
-          font-size: 1rem;
+          && {
+            font-size: 1rem;
+          }
         }
 
         /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 900px) {
-          font-size: 1rem;
+          && {
+            font-size: 1rem;
+          }
         }
 
         /* PLACEHOLDER Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1200px) {
-          font-size: 1.2187rem;
+          && {
+            font-size: 1.2187rem;
+          }
         }
 
         /* PLACEHOLDER Extra Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1536px) {
-          font-size: 1.2rem;
+          && {
+            font-size: 1.2rem;
+          }
         }
       }
 
       /* INPUT Extra small devices (phones, 600px and down) */
       @media only screen and (max-width: 600px) {
-        /* width: 300px; */
-        font-size: 1rem;
-        height: 1px;
+        && {
+          /* width: 300px; */
+          font-size: 1rem;
+          height: 1px;
+        }
       }
 
       /* INPUT Small devices (portrait tablets and large phones, 600px and up) */
       @media only screen and (min-width: 600px) {
-        /* width: 300px; */
-        font-size: 1rem;
-        height: 1px;
+        && {
+          /* width: 300px; */
+          font-size: 1rem;
+          height: 1px;
+        }
       }
 
       /* INPUT Large devices (laptops/desktops, 900px and up) */
       @media only screen and (min-width: 900px) {
-        /* width: 250px; */
-        font-size: 1rem;
-        height: 7px;
+        && {
+          /* width: 250px; */
+          font-size: 1rem;
+          height: 7px;
+        }
       }
 
       /* INPUT Extra large devices (large laptops and desktops, 1200px and up) */
       @media only screen and (min-width: 1200px) {
-        /* width: 400px; */
-        font-size: 1.2187rem;
-        height: 10px;
+        && {
+          /* width: 400px; */
+          font-size: 1.2187rem;
+          height: 10px;
+        }
       }
 
       /* INPUT Extra Extra large devices (large laptops and desktops, 1536px and up) */
       @media only screen and (min-width: 1536px) {
-        width: 900px;
-        font-size: 18px;
-        font-weight: 500;
-        height: 14px;
+        && {
+          width: 900px;
+          font-size: 18px;
+          font-weight: 500;
+          height: 14px;
+        }
       }
     }
   }
