@@ -159,6 +159,7 @@ const StyledToolbar = styled(Toolbar)`
         padding-left: 34px;
         padding-right: 15px;
         min-height: 34px;
+        background-color: red;
       }
     }
 
