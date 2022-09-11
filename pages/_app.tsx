@@ -1,5 +1,4 @@
 // import "../styles/globals.css";
-import Head from "next/head";
 import type { AppProps } from "next/app";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "../store";
@@ -17,12 +16,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <MainNavbar />
           <ContainerBody>
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1.0"
-              />
-            </Head>
             <Component {...pageProps} />
           </ContainerBody>
         </ThemeProvider>

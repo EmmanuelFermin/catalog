@@ -12,15 +12,16 @@ interface ProductProps {
 const Home: NextPage<ProductProps> = ({ products }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   return (
-    <div>
+    <>
       <Head>
         <title>Centralized Catalog</title>
         <meta name="description" content="Centralized Catalog" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {isAuthenticated ? <CatalogLayout products={products} /> : ""}
-    </div>
+    </>
   );
 };
 
