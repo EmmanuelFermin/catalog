@@ -155,9 +155,11 @@ const StyledToolbar = styled(Toolbar)`
   && {
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
-      padding-left: 34px;
-      padding-right: 15px;
-      min-height: 34px;
+      && {
+        padding-left: 34px;
+        padding-right: 15px;
+        min-height: 34px;
+      }
     }
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
