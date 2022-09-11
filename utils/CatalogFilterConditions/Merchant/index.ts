@@ -1,2 +1,2 @@
 export { default as notInCurrBranchIsFilterSearchInMerchNumNotBranchNumWithExactQuery } from "./notInCurrentCatalogAndisFilterSearchInMerchantNumAndNotBranchNumWithExactQuery";
-export { default as notInCurBranchAndIsFilterSearchInMerchantAndBranchNumWithExactQuery } from "./notInCurrentCatalogAndisFilterSearchInMerchantAndBranchNumWithExactQuery"; 
+export { default as notInCurBranchAndIsFilterSearchInMerchantAndBranchNumWithExactQuery } from "./notInCurrentCatalogAndisFilterSearchInMerchantAndBranchNumWithExactQuery";
