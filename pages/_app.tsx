@@ -12,14 +12,17 @@ import ContainerBody from "../components/ContainerBody";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
       <ReduxProvider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <MainNavbar />
           <ContainerBody>
+            <Head>
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0"
+              />
+            </Head>
             <Component {...pageProps} />
           </ContainerBody>
         </ThemeProvider>
