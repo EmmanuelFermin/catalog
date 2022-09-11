@@ -2,6 +2,10 @@ import React, { FC, Fragment } from "react";
 import { Box, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useSelector } from "../../store";
+import {
+  notInCurrBranchIsFilterSearchInMerchNumNotBranchNumWithExactQuery,
+  notInCurBranchAndIsFilterSearchInMerchantAndBranchNumWithExactQuery,
+} from "../../utils/CatalogFilterConditions/Merchant";
 
 type Branches = {
   branch: string;
@@ -111,13 +115,28 @@ const CatalogItem: FC<CatalogProps> = ({
   const isNotCurrentBranchAndAllMatchBranchNumber =
     currentBranch !== branch && boldAllMatchBranchPartNumber;
 
+  // FILTER BY MERCHANT NUM CONDITIONS
+  const notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum: boolean =
+    notInCurrBranchIsFilterSearchInMerchNumNotBranchNumWithExactQuery(
+      isFilterSearchMerchantNum,
+      isFilterSearchBranchNum,
+      isNotCurrentBranchAndExactMerchantNumber
+    );
+
+  const notInCurrBranch_IsFilterSearchInMerchantAndBranchNum_WithExactMerchNum: boolean =
+    notInCurBranchAndIsFilterSearchInMerchantAndBranchNumWithExactQuery(
+      isFilterSearchMerchantNum,
+      isFilterSearchBranchNum,
+      isNotCurrentBranchAndExactMerchantNumber
+    );
+
   // Result Message and Location MERCHANT ------------
   if (
-    (isFilterSearchMerchantNum &&
-      isSubmitted &&
-      isCurrentBranchAndExactMerchantNumber) ||
-    isCurrentBranchAndAllMatchMerchantNumber ||
-    isNotCurrentBranchAndAllMatchMerchantNumber
+    isFilterSearchMerchantNum &&
+    isSubmitted &&
+    (isCurrentBranchAndExactMerchantNumber ||
+      isCurrentBranchAndAllMatchMerchantNumber ||
+      isNotCurrentBranchAndAllMatchMerchantNumber)
   ) {
     resultMsg = (
       <>
@@ -125,12 +144,8 @@ const CatalogItem: FC<CatalogProps> = ({
           component="p"
           isExactlyFound={
             isCurrentBranchAndExactMerchantNumber ||
-            (isFilterSearchMerchantNum &&
-              !isFilterSearchBranchNum &&
-              isNotCurrentBranchAndExactMerchantNumber) ||
-            (isFilterSearchMerchantNum &&
-              isFilterSearchBranchNum &&
-              isNotCurrentBranchAndExactMerchantNumber)
+            notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum ||
+            notInCurrBranch_IsFilterSearchInMerchantAndBranchNum_WithExactMerchNum
           }
         >{`Manufacturer ${merchant} Part Number :`}</ResultMsg>
         <MerchantPartNum component="p">
@@ -149,12 +164,8 @@ const CatalogItem: FC<CatalogProps> = ({
         component="p"
         isExactlyFound={
           isCurrentBranchAndExactMerchantNumber ||
-          (isFilterSearchMerchantNum &&
-            !isFilterSearchBranchNum &&
-            isNotCurrentBranchAndExactMerchantNumber) ||
-          (isFilterSearchMerchantNum &&
-            isFilterSearchBranchNum &&
-            isNotCurrentBranchAndExactMerchantNumber)
+          notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum ||
+          notInCurrBranch_IsFilterSearchInMerchantAndBranchNum_WithExactMerchNum
         }
       >
         {`Found in ${
@@ -180,9 +191,9 @@ const CatalogItem: FC<CatalogProps> = ({
         <ResultMsg
           component="p"
           isExactlyFound={
-            ((isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
-              (isCurrentBranchAndExactMerchantNumber ||
-                isCurrentBranchAndExactBranchNumber))
+            (isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
+            (isCurrentBranchAndExactMerchantNumber ||
+              isCurrentBranchAndExactBranchNumber)
           }
         >{`${branch} catalog Part Number :`}</ResultMsg>
         <BranchPartNum component="p">
@@ -212,9 +223,9 @@ const CatalogItem: FC<CatalogProps> = ({
         <ResultLocation
           component="p"
           isExactlyFound={
-            ((isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
-              (isCurrentBranchAndExactMerchantNumber ||
-                isCurrentBranchAndExactBranchNumber))
+            (isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
+            (isCurrentBranchAndExactMerchantNumber ||
+              isCurrentBranchAndExactBranchNumber)
           }
         >
           {`Found in ${branch.toLowerCase()} catalog and ${branches.length} ${
@@ -279,12 +290,8 @@ const CatalogItem: FC<CatalogProps> = ({
               ((isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
                 (isCurrentBranchAndExactMerchantNumber ||
                   isCurrentBranchAndExactBranchNumber)) ||
-              (isFilterSearchMerchantNum &&
-                !isFilterSearchBranchNum &&
-                isNotCurrentBranchAndExactMerchantNumber) ||
-              (isFilterSearchMerchantNum &&
-                isFilterSearchBranchNum &&
-                isNotCurrentBranchAndExactMerchantNumber)
+              notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum ||
+              notInCurrBranch_IsFilterSearchInMerchantAndBranchNum_WithExactMerchNum
                 ? 400
                 : 300
             }`,
