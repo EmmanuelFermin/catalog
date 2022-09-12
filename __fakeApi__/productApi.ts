@@ -41,7 +41,7 @@ class ProductsApi {
         merchant: "M12312",
         merchantPartNumber: "60019533",
         brand: null,
-        designation: ["Indoor", "Outdoor", "LAN", "WAN"],
+        designation: ["Indoor", "Outdoor", "LAN", "WAN", "Network"],
         attributes: [
           { name: "OM3", value: "50/125" },
           { name: "MM", value: "16" },

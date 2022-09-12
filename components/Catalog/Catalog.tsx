@@ -34,6 +34,7 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
     dispatch(setIsSubmitted(false));
   };
 
+  // First layer since JavaScript is only 1 dimensional array
   const handleSearch = (event: any) => {
     if (event.key === "Enter" || event.type === "click") {
       setSearchResults([]);
@@ -165,9 +166,6 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   branches={item.branches}
                   branchPartNumber={item.branchPartNumber}
                   isFilterSearchBranchNum={isSearchBranchNum}
-                  designation={item.designation.find((el: string) =>
-                    el.toLowerCase().includes(query.toLowerCase())
-                  )}
                   isFilterSearchDesignation={isSearchDesignation}
                 />
               ))}
