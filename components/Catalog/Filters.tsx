@@ -205,7 +205,7 @@ const Filters: FC = () => {
               sm: "0.75rem",
               md: "0.85rem",
               lg: "1rem",
-              xl: "1.47rem",
+              xl: "1.40625rem",
             },
             fontWeight: 500,
             ml: "10px",
@@ -239,7 +239,7 @@ const Filters: FC = () => {
                     sm: "0.75rem",
                     md: "0.85rem",
                     lg: "1rem",
-                    xl: "1.47rem",
+                    xl: "1.40625rem",
                   },
                   fontWeight: 300,
                   color: `${
@@ -282,14 +282,17 @@ const Filters: FC = () => {
                         icon={
                           <UncheckedBoxIcon
                             sx={{
-                              fontSize: "15px",
+                              fontSize: "0.75rem",
                               backgroundColor: "white",
                             }}
                           />
                         }
                         checkedIcon={
                           <CheckedBoxIcon
-                            sx={{ fontSize: "15px", backgroundColor: "white" }}
+                            sx={{
+                              fontSize: "0.75rem",
+                              backgroundColor: "white",
+                            }}
                           />
                         }
                       />
@@ -302,7 +305,7 @@ const Filters: FC = () => {
                             sm: "0.75rem",
                             md: "0.85rem",
                             lg: "1rem",
-                            xl: "1.1rem",
+                            xl: "1.03125rem",
                           },
                           fontWeight: 300,
                         }}

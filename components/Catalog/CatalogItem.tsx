@@ -421,7 +421,7 @@ const CatalogItem: FC<CatalogProps> = ({
               sm: "0.75rem",
               md: "0.85rem",
               lg: "1rem",
-              xl: "1.47rem",
+              xl: "1.40625rem",
             },
             fontWeight: 500,
             mt: "33px",
@@ -437,7 +437,7 @@ const CatalogItem: FC<CatalogProps> = ({
               sm: "0.75rem",
               md: "0.85rem",
               lg: "1rem",
-              xl: "1.1rem",
+              xl: "1.03125rem",
             },
             fontWeight: `${
               ((isFilterSearchBranchNum || isFilterSearchMerchantNum) &&
@@ -480,7 +480,7 @@ const ResultBox = styled(Box)`
 
 const ResultMsg = styled(Typography)`
   && {
-    font-size: 1.1rem;
+    font-size: 1.03125rem;
     font-weight: ${(props: { isExactlyFound: boolean }) =>
       props.isExactlyFound ? 400 : 300};
     color: #797777;
@@ -490,7 +490,7 @@ const ResultMsg = styled(Typography)`
 
 const ResultLocation = styled(Typography)`
   && {
-    font-size: 1.1rem;
+    font-size: 1.03125rem;
     font-weight: ${(props: { isExactlyFound: boolean }) =>
       props.isExactlyFound ? 400 : 300};
     color: #797777;
@@ -500,7 +500,7 @@ const ResultLocation = styled(Typography)`
 
 const MerchantPartNum = styled(Typography)`
   && {
-    font-size: 1.1rem;
+    font-size: 1.03125rem;
     font-weight: 300;
     color: #797777;
     letter-spacing: 0.74px;
@@ -510,7 +510,7 @@ const MerchantPartNum = styled(Typography)`
 
 const BranchPartNum = styled(Typography)`
   && {
-    font-size: 1.1rem;
+    font-size: 1.03125rem;
     font-weight: 300;
     color: #797777;
     letter-spacing: 0.74px;
@@ -520,7 +520,7 @@ const BranchPartNum = styled(Typography)`
 
 const Designation = styled(Typography)`
   && {
-    font-size: 1.1rem;
+    font-size: 1.03125rem;
     font-weight: ${(props: any) => (props.isfound ? 500 : 300)};
     color: #797777;
     letter-spacing: 0.74px;
@@ -530,7 +530,7 @@ const Designation = styled(Typography)`
 
 const Attribute = styled(Typography)`
   && {
-    font-size: 1.1rem;
+    font-size: 1.03125rem;
     font-weight: ${(props: any) => (props.isfound ? 500 : 300)};
     color: #797777;
     letter-spacing: 0.74px;

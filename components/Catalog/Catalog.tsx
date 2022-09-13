@@ -78,9 +78,9 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
       <FlexContainer>
         <Box
           sx={{
+            width: "100%",
             p: "19px 38px 19px 38px",
             backgroundColor: "#F4F4F4",
-            position: "relative",
           }}
         >
           <SearchField
@@ -100,20 +100,20 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
             </FormHelperText>
           )}
         </Box>
-        <Box sx={{ ml: "37px" }}>
+        <Box sx={{ ml: "35px", mr: "35px" }}>
           <Button
             onClick={handleSearch}
             variant="contained"
             color="secondary"
             disableElevation
-            sx={{ borderRadius: "0", width: "113px", height: "85px" }}
+            sx={{ borderRadius: "0", width: "7.0625rem", height: "5.3125rem" }}
           >
-            <GoSearchIcon sx={{ fontSize: 36 }} />
+            <GoSearchIcon sx={{ fontSize: "2.25rem" }} />
           </Button>
         </Box>
       </FlexContainer>
 
-      <Box sx={{ p: "0 0 20px 20px", width: "1009px" }}>
+      <Box sx={{ p: "0 205px 20px 20px" }}>
         <List>
           {isSubmitted &&
           searchResults.length > 0 &&
@@ -212,11 +212,13 @@ export default Catalog;
 const FlexContainer = styled(Box)`
   && {
     display: flex;
+    width: 100%;
   }
 `;
 
 const SearchField = styled(TextField)`
   && {
+    width: 100%;
     background-color: #ffffff;
     margin-left: auto;
     box-shadow: 1px -12px 0px -6px
@@ -227,16 +229,15 @@ const SearchField = styled(TextField)`
       border: ${(props: any) => (props.error ? "" : "none")};
     }
     & input {
-      width: 900px;
-      font-size: 18px;
+      width: 100%;
+      font-size: 1.03125rem;
       font-weight: 500;
-      height: 14px;
-      font-size: 0.9rem;
+      height: 0.875rem;
       color: #000000;
       font-weight: 500;
       padding-left: 19px;
       &::placeholder {
-        font-size: 1.2rem;
+        font-size: 1.03125rem;
         font-weight: 300;
         color: #797777;
         opacity: 0.9;
@@ -307,19 +308,18 @@ const SearchField = styled(TextField)`
       /* INPUT Extra large devices (large laptops and desktops, 1200px and up) */
       @media only screen and (min-width: 1200px) {
         && {
-          /* width: 400px; */
           font-size: 1.2187rem;
-          height: 10px;
+          height: 0.625rem;
         }
       }
 
       /* INPUT Extra Extra large devices (large laptops and desktops, 1536px and up) */
       @media only screen and (min-width: 1536px) {
         && {
-          width: 900px;
-          font-size: 18px;
+          /* width: 900px; */
+          font-size: 1.03125rem;
           font-weight: 500;
-          height: 14px;
+          height: 0.875rem;
         }
       }
     }

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import styled from "styled-components";
 
 interface ContainerBodyProps {
@@ -7,13 +7,14 @@ interface ContainerBodyProps {
 }
 
 const ContainerBody: FC<ContainerBodyProps> = (props) => {
-  return <StyledContainer>{props.children}</StyledContainer>;
+  return <StyledContainer maxWidth="xl">{props.children}</StyledContainer>;
 };
 
 export default ContainerBody;
 
-const StyledContainer = styled(Box)`
+const StyledContainer = styled(Container)`
   && {
+    max-width: 2500px;
     padding-top: 120px;
     padding-left: 64px;
     padding-right: 65px;
