@@ -14,5 +14,5 @@ export interface Product {
   merchantPartNumber?: string;
   branchPartNumber?: string;
   designation: string[];
-  attributes: { name: string; value: string }[];
+  attributes: string[];
 }

@@ -9,7 +9,9 @@ type Branches = {
   merchantPartNumber?: string;
   branchPartNumber?: string;
   designation: string[];
+  attributes: string[];
 };
+
 interface CatalogProps {
   productName: string;
   productDesc: string;
@@ -29,6 +31,11 @@ interface CatalogProps {
   isFilterSearchDesignation: boolean;
   designationRefIndex: number;
   designationRelevanceScore: number;
+  attributes?: string;
+  boldExactOrAllMatchAttributes: string[];
+  attributesRefIndex: number;
+  attributesRelevanceScore: number;
+  isFilterSearchAttributes: boolean;
   indices?: [number[]];
 }
 
@@ -90,6 +97,11 @@ const CatalogItem: FC<CatalogProps> = ({
   designationRefIndex,
   designationRelevanceScore,
   isFilterSearchDesignation,
+  attributes,
+  boldExactOrAllMatchAttributes,
+  attributesRefIndex,
+  attributesRelevanceScore,
+  isFilterSearchAttributes,
   indices,
 }) => {
   const { isSubmitted, query } = useSelector((state) => state.filters);
@@ -224,13 +236,14 @@ const CatalogItem: FC<CatalogProps> = ({
   const isCurrentBranchAndExactDesignation =
     currentBranch === branch &&
     boldExactOrAllMatchDesignation.some((el) => el === designation);
-
-  console.log(
-    "CURRENT BRANCH AND EXACT DESIGNATION: ",
-    isCurrentBranchAndExactDesignation
-  );
   const isCurrentBranchAndAllMatchDesignation =
     currentBranch === branch && boldExactOrAllMatchDesignation.includes(query);
+
+  const isCurrentBranchAndExactAttributes =
+    currentBranch === branch &&
+    boldExactOrAllMatchAttributes.some((el) => el === attributes);
+  const isCurrentBranchAndAllMatchAttributes =
+    currentBranch === branch && boldExactOrAllMatchAttributes.includes(query);
 
   // Is NOT CURRENT branch/catalog conditions ------------
   const isNotCurrentBranchAndExactMerchantNumber =
@@ -248,7 +261,13 @@ const CatalogItem: FC<CatalogProps> = ({
     boldExactOrAllMatchDesignation.some((el) => el === designation);
   const isNotCurrentBranchAndAllMatchDesignation =
     currentBranch !== branch && boldExactOrAllMatchDesignation.includes(query);
-  console.log(designationRelevanceScore);
+
+  const isNotCurrentBranchAndExactAttributes =
+    currentBranch !== branch &&
+    boldExactOrAllMatchAttributes.some((el) => el === attributes);
+  const isNotCurrentBranchAndAllMatchAttributes =
+    currentBranch !== branch && boldExactOrAllMatchAttributes.includes(query);
+
   let resultMsg: JSX.Element = <></>;
   let resultLocation: JSX.Element = <></>;
   // Result Message and Location MERCHANT ------------
@@ -390,6 +409,49 @@ const CatalogItem: FC<CatalogProps> = ({
     );
   }
 
+  // Result Message and Location ATTRIBUTES ------------
+  if (
+    isFilterSearchAttributes &&
+    isSubmitted &&
+    (isCurrentBranchAndExactAttributes ||
+      isCurrentBranchAndAllMatchAttributes ||
+      isNotCurrentBranchAndExactAttributes ||
+      isNotCurrentBranchAndAllMatchAttributes)
+  ) {
+    resultMsg = (
+      <Fragment>
+        <ResultMsg
+          component="p"
+          isExactlyFound={
+            Boolean(isCurrentBranchAndExactAttributes) &&
+            attributesRefIndex === 0
+          }
+        >{`${branch} catalog Attributes :`}</ResultMsg>
+        <Attribute component="p">
+          {superBoldDesignation(
+            query,
+            attributes!,
+            indices!,
+            Boolean(isCurrentBranchAndExactAttributes)
+          )}
+        </Attribute>
+      </Fragment>
+    );
+
+    resultLocation = (
+      <ResultLocation
+        component="p"
+        isExactlyFound={
+          Boolean(isCurrentBranchAndExactAttributes) && attributesRefIndex === 0
+        }
+      >
+        {`Found in ${branch.toLowerCase()} catalog and ${branches.length} ${
+          branches.length > 1 ? "others" : "other"
+        }`}
+      </ResultLocation>
+    );
+  }
+
   return (
     <ListItem>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -426,7 +488,10 @@ const CatalogItem: FC<CatalogProps> = ({
                   isCurrentBranchAndExactBranchNumber)) ||
               (isFilterSearchDesignation &&
                 Boolean(isCurrentBranchAndExactDesignation) &&
-                designationRefIndex === 0)
+                designationRefIndex === 0) ||
+              (isFilterSearchAttributes &&
+                Boolean(isCurrentBranchAndExactAttributes) &&
+                attributesRefIndex === 0)
                 ? 400
                 : 300
             }`,
@@ -497,6 +562,16 @@ const BranchPartNum = styled(Typography)`
 `;
 
 const Designation = styled(Typography)`
+  && {
+    font-size: 1.1rem;
+    font-weight: ${(props: any) => (props.isfound ? 500 : 300)};
+    color: #797777;
+    letter-spacing: 0.74px;
+    display: flex;
+  }
+`;
+
+const Attribute = styled(Typography)`
   && {
     font-size: 1.1rem;
     font-weight: ${(props: any) => (props.isfound ? 500 : 300)};

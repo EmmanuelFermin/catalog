@@ -170,6 +170,11 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   designationRefIndex={item.refIndex}
                   designationRelevanceScore={item.score}
                   isFilterSearchDesignation={isSearchDesignation}
+                  attributes={item.matches[0].value}
+                  boldExactOrAllMatchAttributes={item.item.attributes}
+                  attributesRefIndex={item.refIndex}
+                  attributesRelevanceScore={item.score}
+                  isFilterSearchAttributes={isSearchAttributes}
                   indices={item.matches[0].indices}
                 />
               ))
@@ -189,6 +194,10 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   designationRefIndex={item.refIndex}
                   designationRelevanceScore={item.score}
                   isFilterSearchDesignation={isSearchDesignation}
+                  boldExactOrAllMatchAttributes={item.attributes}
+                  attributesRefIndex={item.refIndex}
+                  attributesRelevanceScore={item.score}
+                  isFilterSearchAttributes={isSearchAttributes}
                 />
               ))}
         </List>

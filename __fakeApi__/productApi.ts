@@ -43,10 +43,10 @@ class ProductsApi {
         brand: null,
         designation: ["Indoor", "Outdoor", "LAN", "WAN", "Network"],
         attributes: [
-          { name: "OM3", value: "50/125" },
-          { name: "MM", value: "16" },
-          { name: "LSZH", value: "Eca Black" },
-          { name: "Tight Buffer", value: "ES9" },
+          "OM3 50/125",
+          "MM 16",
+          "LSZH Eca Black",
+          "Tight Buffer ES9",
         ],
       },
       {
@@ -74,14 +74,14 @@ class ProductsApi {
         brand: "Lande",
         designation: ["Housing server", "IT equipment"],
         attributes: [
-          { name: "Min Height", value: "26U" },
-          { name: "Max Height", value: "47U" },
-          { name: "Min Depth", value: "1000mm" },
-          { name: "Max Depth", value: "1200mm" },
-          { name: "Width", value: "600mm" },
-          { name: "Option 1", value: "Adj Fee & Earth Kit" },
-          { name: "Front Door", value: "Vented" },
-          { name: "Side Panels", value: "Removable" },
+          "Min Height 26U",
+          "Max Height 47U",
+          "Min Depth 1000mm",
+          "Max Depth 1200mm",
+          "Width 600mm",
+          "Option 1 Adj Fee & Earth Kit",
+          "Front Door Vented",
+          "Side Panels Removable",
         ],
       },
       {
@@ -134,13 +134,10 @@ class ProductsApi {
           "Pharmaceutical processing industry",
         ],
         attributes: [
-          {
-            name: "Features and Benefits",
-            value: "Magnetic and x-ray detectable",
-          },
-          { name: "Colour", value: "Blue" },
-          { name: "Material", value: "Metal Detectable Polypropylene (PPMP)" },
-          { name: "Series", value: "MCT" },
+          "Features and Benefits Magnetic and x ray detectable",
+          "Colour Blue",
+          "Material Metal Detectable Polypropylene (PPMP)",
+          "Series MCT",
         ],
       },
       {
@@ -162,20 +159,11 @@ class ProductsApi {
         brand: "Fluke Networks",
         designation: ["Testing"],
         attributes: [
-          {
-            name: "Integrated WiFi",
-            value: "IEEE 802.11 a/b/g/n; dual band (2.4 GHz and 5 GHz)",
-          },
-          {
-            name: "Speed of autotest",
-            value:
-              "Full 2-way autotest of Cat5e/6: 9 seconds. Full Cat6A 2-way autotest: 10 seconds",
-          },
-
-          {
-            name: "Capability of test",
-            value: "up to TIA Cat6A or ISO/IEC Class FA",
-          },
+          "Integrated WiFi",
+          "IEEE 802.11 a/b/g/n; dual band (2.4 GHz and 5 GHz)",
+          "Speed of autotest",
+          "Full 2-way autotest of Cat5e/6: 9 seconds. Full Cat6A 2-way autotest: 10 seconds",
+          "Capability of test up to TIA Cat6A or ISO/IEC Class FA",
         ],
       },
     ];
