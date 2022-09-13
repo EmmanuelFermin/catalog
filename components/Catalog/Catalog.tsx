@@ -81,6 +81,7 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
             width: "100%",
             p: "19px 38px 19px 38px",
             backgroundColor: "#F4F4F4",
+            position: "relative",
           }}
         >
           <SearchField
