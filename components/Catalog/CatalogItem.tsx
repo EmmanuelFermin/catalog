@@ -420,7 +420,7 @@ const CatalogItem: FC<CatalogProps> = ({
             fontSize: {
               sm: "0.75rem",
               md: "0.85rem",
-              lg: "0.8rem",
+              lg: "0.9rem",
               xl: "1.40625rem",
             },
             fontWeight: 500,
@@ -436,7 +436,7 @@ const CatalogItem: FC<CatalogProps> = ({
             fontSize: {
               sm: "0.75rem",
               md: "0.85rem",
-              lg: "0.601rem",
+              lg: "0.875rem",
               xl: "1.03125rem",
             },
             fontWeight: `${
@@ -487,7 +487,7 @@ const ResultMsg = styled(Typography)`
     letter-spacing: 0.74px;
     @media only screen and (min-width: 1200px) {
       & {
-        font-size: 0.601rem;
+        font-size: 0.875rem;
       }
     }
     @media only screen and (min-width: 1536px) {
@@ -507,7 +507,7 @@ const ResultLocation = styled(Typography)`
     letter-spacing: 0.74px;
     @media only screen and (min-width: 1200px) {
       & {
-        font-size: 0.601rem;
+        font-size: 0.875rem;
       }
     }
     @media only screen and (min-width: 1536px) {
@@ -527,7 +527,7 @@ const MerchantPartNum = styled(Typography)`
     display: flex;
     @media only screen and (min-width: 1200px) {
       & {
-        font-size: 0.601rem;
+        font-size: 0.875rem;
       }
     }
     @media only screen and (min-width: 1536px) {
@@ -547,7 +547,7 @@ const BranchPartNum = styled(Typography)`
     display: flex;
     @media only screen and (min-width: 1200px) {
       & {
-        font-size: 0.601rem;
+        font-size: 0.875rem;
       }
     }
     @media only screen and (min-width: 1536px) {
@@ -567,7 +567,7 @@ const Designation = styled(Typography)`
     display: flex;
     @media only screen and (min-width: 1200px) {
       & {
-        font-size: 0.601rem;
+        font-size: 0.875rem;
       }
     }
     @media only screen and (min-width: 1536px) {
@@ -587,7 +587,7 @@ const Attribute = styled(Typography)`
     display: flex;
     @media only screen and (min-width: 1200px) {
       & {
-        font-size: 0.601rem;
+        font-size: 0.875rem;
       }
     }
     @media only screen and (min-width: 1536px) {
