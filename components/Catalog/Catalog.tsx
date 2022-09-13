@@ -79,7 +79,7 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
         <Box
           sx={{
             width: "100%",
-            p: "19px 38px 19px 38px",
+            p: { lg: "10px 20px 10px 20px", xl: "19px 38px 19px 38px" },
             backgroundColor: "#F4F4F4",
             position: "relative",
           }}
@@ -94,27 +94,43 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
           />
           {query === "" && isSubmitted && (
             <FormHelperText
-              sx={{ position: "absolute", bottom: 0, color: "#d62d24" }}
+              sx={{
+                position: "absolute",
+                bottom: { lg: -2, xl: 0 },
+                color: "#d62d24",
+                fontSize: { lg: "0.56rem", xl: "0.75rem" },
+              }}
               id="search"
             >
               This field is required
             </FormHelperText>
           )}
         </Box>
-        <Box sx={{ ml: "35px", mr: "35px" }}>
+        <Box
+          sx={{
+            ml: { lg: "20px", xl: "35px" },
+            mr: { lg: "20px", xl: "35px" },
+          }}
+        >
           <Button
             onClick={handleSearch}
             variant="contained"
             color="secondary"
             disableElevation
-            sx={{ borderRadius: "0", width: "7.0625rem", height: "5.3125rem" }}
+            sx={{
+              borderRadius: "0",
+              width: { lg: "5.0625rem", xl: "7.0625rem" },
+              height: { lg: "3.3125rem", xl: "5.3125rem" },
+            }}
           >
-            <GoSearchIcon sx={{ fontSize: "2.25rem" }} />
+            <GoSearchIcon
+              sx={{ fontSize: { lg: "1.775rem", xl: "2.25rem" } }}
+            />
           </Button>
         </Box>
       </FlexContainer>
 
-      <Box sx={{ p: "0 205px 20px 20px" }}>
+      <Box sx={{ p: { lg: "0 124px 5px 5px", xl: "0 205px 20px 20px" } }}>
         <List>
           {isSubmitted &&
           searchResults.length > 0 &&
@@ -228,7 +244,21 @@ const SearchField = styled(TextField)`
       height: 50px;
       border-bottom: none;
       border: ${(props: any) => (props.error ? "" : "none")};
+
+      /* FIELD SET Extra large devices (large laptops and desktops, 1200px and up) */
+      @media only screen and (min-width: 1200px) {
+        & {
+          height: 37px;
+        }
+      }
+      /* FIELD SET Extra Extra large devices (large laptops and desktops, 1536px and up) */
+      @media only screen and (min-width: 1536px) {
+        & {
+          height: 50px;
+        }
+      }
     }
+
     & input {
       width: 100%;
       font-size: 1.03125rem;
@@ -245,35 +275,35 @@ const SearchField = styled(TextField)`
 
         /* PLACEHOLDER Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
-          && {
-            font-size: 1rem;
+          & {
+            font-size: 0.775rem;
           }
         }
 
         /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 600px) {
-          && {
-            font-size: 1rem;
+          & {
+            font-size: 0.775rem;
           }
         }
 
         /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 900px) {
-          && {
-            font-size: 1rem;
+          & {
+            font-size: 0.775rem;
           }
         }
 
         /* PLACEHOLDER Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1200px) {
-          && {
-            font-size: 1.2rem;
+          & {
+            font-size: 0.775rem;
           }
         }
 
         /* PLACEHOLDER Extra Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1536px) {
-          && {
+          & {
             font-size: 1.2rem;
           }
         }
@@ -281,47 +311,60 @@ const SearchField = styled(TextField)`
 
       /* INPUT Extra small devices (phones, 600px and down) */
       @media only screen and (max-width: 600px) {
-        && {
-          /* width: 300px; */
-          font-size: 1rem;
-          height: 1px;
+        & {
+          font-size: 0.775rem;
+          height: 0.175rem;
         }
       }
 
       /* INPUT Small devices (portrait tablets and large phones, 600px and up) */
       @media only screen and (min-width: 600px) {
-        && {
-          /* width: 300px; */
-          font-size: 1rem;
-          height: 1px;
+        & {
+          font-size: 0.775rem;
+          height: 0.175rem;
         }
       }
 
       /* INPUT Large devices (laptops/desktops, 900px and up) */
       @media only screen and (min-width: 900px) {
-        && {
-          /* width: 250px; */
-          font-size: 1rem;
-          height: 7px;
+        & {
+          font-size: 0.775rem;
+          height: 0.175rem;
         }
       }
 
       /* INPUT Extra large devices (large laptops and desktops, 1200px and up) */
       @media only screen and (min-width: 1200px) {
-        && {
-          font-size: 1.2187rem;
-          height: 0.625rem;
+        & {
+          font-size: 0.775rem;
+          height: 0.175rem;
         }
       }
 
       /* INPUT Extra Extra large devices (large laptops and desktops, 1536px and up) */
       @media only screen and (min-width: 1536px) {
-        && {
-          /* width: 900px; */
+        & {
           font-size: 1.03125rem;
           font-weight: 500;
           height: 0.875rem;
         }
+      }
+    }
+
+    /* SEARCH FIELD Extra large devices (large laptops and desktops, 1200px and up) */
+    @media only screen and (min-width: 1200px) {
+      & {
+        height: 2rem;
+        box-shadow: 1px -9px 0px -6px
+          ${(props: any) => (props.error ? "#d62d24" : "#000")} inset;
+      }
+    }
+
+    /* SEARCH FIELD Extra Extra large devices (large laptops and desktops, 1536px and up) */
+    @media only screen and (min-width: 1536px) {
+      & {
+        font-size: 1.03125rem;
+        height: 3rem;
       }
     }
   }

@@ -193,7 +193,11 @@ const Filters: FC = () => {
         sx={{
           backgroundColor: "#F4F4F4",
           m: "0 0 3px 0",
-          p: "19px 0 25px 25px",
+          p: {
+            md: "10px 0 16px 16px",
+            lg: "10px 0 16px 16px",
+            xl: "19px 0 25px 25px",
+          },
         }}
       >
         <Typography
@@ -219,7 +223,7 @@ const Filters: FC = () => {
         sx={{
           backgroundColor: "#F4F4F4",
           m: "0 0 19px 0",
-          p: "23.5px 0 23.5px 25px",
+          p: { lg: "16.5px 0 16.5px 25px", xl: "23.5px 0 23.5px 25px" },
           boxShadow: `${
             isSubmitted && (isBranchesFilterEmpty || isSearchInFilterEmpty)
               ? "0 0 0 1px #d62d24 inset"
@@ -237,7 +241,7 @@ const Filters: FC = () => {
                   flexGrow: 1,
                   fontSize: {
                     sm: "0.75rem",
-                    md: "0.85rem",
+                    md: "0.875rem",
                     lg: "1rem",
                     xl: "1.40625rem",
                   },
@@ -257,7 +261,7 @@ const Filters: FC = () => {
                       ? "#d62d24"
                       : ""
                   }`,
-                  ml: "10px",
+                  ml: "1px",
                 }}
               >
                 {criterion.title}
@@ -267,12 +271,12 @@ const Filters: FC = () => {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  p: "7px 0 0 38px",
+                  p: "7px 0 0 18px",
                 }}
               >
                 {criterion.options.map((option) => (
                   <FormControlLabel
-                    sx={{ mb: "15px" }}
+                    sx={{ mb: { lg: "5px", xl: "15px" } }}
                     key={option.id}
                     control={
                       <Checkbox
@@ -282,7 +286,7 @@ const Filters: FC = () => {
                         icon={
                           <UncheckedBoxIcon
                             sx={{
-                              fontSize: "0.75rem",
+                              fontSize: { lg: "0.65rem", xl: "0.75rem" },
                               backgroundColor: "white",
                             }}
                           />
@@ -290,7 +294,7 @@ const Filters: FC = () => {
                         checkedIcon={
                           <CheckedBoxIcon
                             sx={{
-                              fontSize: "0.75rem",
+                              fontSize: { lg: "0.65rem", xl: "0.75rem" },
                               backgroundColor: "white",
                             }}
                           />
@@ -300,11 +304,10 @@ const Filters: FC = () => {
                     label={
                       <Typography
                         sx={{
-                          flexGrow: 1,
                           fontSize: {
                             sm: "0.75rem",
                             md: "0.85rem",
-                            lg: "1rem",
+                            lg: "0.875rem",
                             xl: "1.03125rem",
                           },
                           fontWeight: 300,

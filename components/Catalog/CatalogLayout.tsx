@@ -14,12 +14,12 @@ const CatalogLayout: FC<CatalogLayoutProps> = ({ products }) => {
       sx={{ maxWidth: "100%" }}
       container
       spacing={0.5}
-      columns={{ xs: 21, sm: 21, md: 21, lg: 15, xl: 21 }}
+      columns={{ xs: 13, sm: 15, md: 17, lg: 19, xl: 21 }}
     >
-      <Grid item xs={21} sm={14} md={14} lg={11} xl={14}>
+      <Grid item xs={13} sm={11} md={12} lg={13} xl={14}>
         <Catalog items={products} />
       </Grid>
-      <Grid item xs={21} sm={7} md={7} lg={4} xl={7}>
+      <Grid item xs={13} sm={4} md={5} lg={6} xl={7}>
         <Filters />
       </Grid>
     </Grid>

@@ -77,12 +77,11 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
             variant="h6"
             component="div"
             sx={{
-              flexGrow: 1,
               fontSize: {
                 sm: "0.75rem",
                 md: "0.85rem",
-                lg: "1rem",
-                xl: "1.4rem",
+                lg: "0.85rem",
+                xl: "1.40625rem",
               },
               fontWeight: 500,
               display: { xs: "none", sm: "block" },
@@ -109,7 +108,7 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
               <NavButton
                 key={item}
                 sx={{
-                  fontSize: { lg: "1rem", xl: "1.4rem" },
+                  fontSize: { lg: "1rem", xl: "1.40625rem" },
                   ml: { md: "11px", lg: "11px", xl: "31px" },
                 }}
               >
@@ -216,8 +215,8 @@ const StyledToolbar = styled(Toolbar)`
 const StyledAvatar = styled(Avatar)`
   && {
     background-color: transparent;
-    height: 34px;
-    width: 34px;
+    height: 2.125rem;
+    width: 2.125rem;
   }
 `;
 
@@ -225,13 +224,14 @@ const SearchField = styled(TextField)`
   && {
     background-color: #ffffff;
     margin-left: auto;
+    width: 39%;
     & fieldset {
-      height: 50px;
       border: none;
+
     }
     & input {
-      width: 630px;
-      height: 15px;
+      width: 100%;
+      height: 0.9375rem;
       font-size: 1.4375rem;
       color: #797777;
       &::placeholder {
@@ -242,35 +242,35 @@ const SearchField = styled(TextField)`
 
         /* PLACEHOLDER Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
-          && {
+          & {
             font-size: 1rem;
           }
         }
 
         /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 600px) {
-          && {
+          & {
             font-size: 1rem;
           }
         }
 
         /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 900px) {
-          && {
+          & {
             font-size: 1rem;
           }
         }
 
         /* PLACEHOLDER Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1200px) {
-          && {
-            font-size: 1.2187rem;
+          & {
+            font-size: 1rem;
           }
         }
 
         /* PLACEHOLDER Extra Extra large devices (large laptops and desktops, 1200px and up) */
         @media only screen and (min-width: 1536px) {
-          && {
+          & {
             font-size: 1.4375rem;
           }
         }
@@ -278,47 +278,57 @@ const SearchField = styled(TextField)`
 
       /* INPUT Extra small devices (phones, 600px and down) */
       @media only screen and (max-width: 600px) {
-        && {
-          width: 300px;
+        & {
           font-size: 1rem;
-          height: 1px;
+          height: 0.625rem;
         }
       }
 
       /* INPUT Small devices (portrait tablets and large phones, 600px and up) */
       @media only screen and (min-width: 600px) {
-        && {
-          width: 300px;
+        & {
           font-size: 1rem;
-          height: 1px;
+          height: 0.625rem;
         }
       }
 
       /* INPUT Large devices (laptops/desktops, 900px and up) */
       @media only screen and (min-width: 900px) {
-        && {
-          width: 250px;
+        & {
           font-size: 1rem;
-          height: 7px;
+          height: 0.625rem;
         }
       }
 
       /* INPUT Extra large devices (large laptops and desktops, 1200px and up) */
       @media only screen and (min-width: 1200px) {
-        && {
-          width: 400px;
-          font-size: 1.2187rem;
-          height: 10px;
+        & {
+          font-size: 1rem;
+          height: 0.325rem;
         }
       }
 
       /* INPUT Extra Extra large devices (large laptops and desktops, 1536px and up) */
       @media only screen and (min-width: 1536px) {
-        && {
-          width: 630px;
+        & {
           font-size: 1.4375rem;
-          height: 15px;
+          height: 0.9375rem;
         }
+      }
+    }
+
+    /* SEARCH FIELD Extra Extra large devices (large laptops and desktops, 1536px and up) */
+    @media only screen and (min-width: 1200px) {
+      & {
+        width: 32%;
+        font-size: 1rem;
+      }
+    }
+    /* SEARCH FIELD Extra Extra large devices (large laptops and desktops, 1536px and up) */
+    @media only screen and (min-width: 1536px) {
+      & {
+        width: 39%;
+        font-size: 1.4375rem;
       }
     }
   }

@@ -420,11 +420,11 @@ const CatalogItem: FC<CatalogProps> = ({
             fontSize: {
               sm: "0.75rem",
               md: "0.85rem",
-              lg: "1rem",
+              lg: "0.8rem",
               xl: "1.40625rem",
             },
             fontWeight: 500,
-            mt: "33px",
+            mt: { lg: "27px", xl: "33px" },
           }}
         >
           {productName}
@@ -436,7 +436,7 @@ const CatalogItem: FC<CatalogProps> = ({
             fontSize: {
               sm: "0.75rem",
               md: "0.85rem",
-              lg: "1rem",
+              lg: "0.601rem",
               xl: "1.03125rem",
             },
             fontWeight: `${
@@ -454,7 +454,7 @@ const CatalogItem: FC<CatalogProps> = ({
             }`,
             letterSpacing: "0.74px",
             color: "#797777",
-            mt: "14px",
+            mt: { lg: "8px", xl: "14px" },
           }}
         >
           {productDesc}
@@ -485,6 +485,16 @@ const ResultMsg = styled(Typography)`
       props.isExactlyFound ? 400 : 300};
     color: #797777;
     letter-spacing: 0.74px;
+    @media only screen and (min-width: 1200px) {
+      & {
+        font-size: 0.601rem;
+      }
+    }
+    @media only screen and (min-width: 1536px) {
+      & {
+        font-size: 1.03125rem;
+      }
+    }
   }
 `;
 
@@ -495,6 +505,16 @@ const ResultLocation = styled(Typography)`
       props.isExactlyFound ? 400 : 300};
     color: #797777;
     letter-spacing: 0.74px;
+    @media only screen and (min-width: 1200px) {
+      & {
+        font-size: 0.601rem;
+      }
+    }
+    @media only screen and (min-width: 1536px) {
+      & {
+        font-size: 1.03125rem;
+      }
+    }
   }
 `;
 
@@ -505,6 +525,16 @@ const MerchantPartNum = styled(Typography)`
     color: #797777;
     letter-spacing: 0.74px;
     display: flex;
+    @media only screen and (min-width: 1200px) {
+      & {
+        font-size: 0.601rem;
+      }
+    }
+    @media only screen and (min-width: 1536px) {
+      & {
+        font-size: 1.03125rem;
+      }
+    }
   }
 `;
 
@@ -515,6 +545,16 @@ const BranchPartNum = styled(Typography)`
     color: #797777;
     letter-spacing: 0.74px;
     display: flex;
+    @media only screen and (min-width: 1200px) {
+      & {
+        font-size: 0.601rem;
+      }
+    }
+    @media only screen and (min-width: 1536px) {
+      & {
+        font-size: 1.03125rem;
+      }
+    }
   }
 `;
 
@@ -525,6 +565,16 @@ const Designation = styled(Typography)`
     color: #797777;
     letter-spacing: 0.74px;
     display: flex;
+    @media only screen and (min-width: 1200px) {
+      & {
+        font-size: 0.601rem;
+      }
+    }
+    @media only screen and (min-width: 1536px) {
+      & {
+        font-size: 1.03125rem;
+      }
+    }
   }
 `;
 
@@ -535,5 +585,15 @@ const Attribute = styled(Typography)`
     color: #797777;
     letter-spacing: 0.74px;
     display: flex;
+    @media only screen and (min-width: 1200px) {
+      & {
+        font-size: 0.601rem;
+      }
+    }
+    @media only screen and (min-width: 1536px) {
+      & {
+        font-size: 1.03125rem;
+      }
+    }
   }
 `;
