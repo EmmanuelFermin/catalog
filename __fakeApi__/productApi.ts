@@ -153,14 +153,14 @@ class ProductsApi {
           {
             branch: "Catalog1",
             merchantPartNumber: "60019533LA01",
-            designation: ["Network", "Network test"],
+            designation: ["Network", "Testing"],
           },
         ],
         branchPartNumber: "60044555",
         merchant: "M23331",
         merchantPartNumber: "60019533LA01",
         brand: "Fluke Networks",
-        designation: ["Network", "Network test"],
+        designation: ["Testing"],
         attributes: [
           {
             name: "Integrated WiFi",

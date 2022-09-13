@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import { Box, Button, FormHelperText, List, TextField } from "@mui/material";
 import GoSearchIcon from "../../icons/GoSearch";
 import styled from "styled-components";
@@ -6,15 +6,20 @@ import type { Product } from "../../types/product";
 import Fuse from "fuse.js";
 import CatalogItem from "./CatalogItem";
 import { useDispatch, useSelector } from "../../store";
-import { setIsSubmitted, setQuery } from "../../slices/filters";
+import { setIsSubmitted, setQuery, setVoidQuery } from "../../slices/filters";
 interface CatalogProps {
   items: Product[];
 }
 
 const Catalog: FC<CatalogProps> = ({ items }) => {
   const dispatch = useDispatch();
-  const { filterSettings, isSubmitted, isSearchInFilterEmpty, query } =
-    useSelector((state) => state.filters);
+  const {
+    filterSettings,
+    isSubmitted,
+    isSearchInFilterEmpty,
+    query,
+    voidQuery,
+  } = useSelector((state) => state.filters);
   const [searchResults, setSearchResults] = useState<any>([]);
 
   const {
@@ -32,12 +37,16 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
   const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setQuery(event.target.value));
     dispatch(setIsSubmitted(false));
+    dispatch(setVoidQuery(false));
   };
 
   // First layer since JavaScript is only 1 dimensional array
   const handleSearch = (event: any) => {
     if (event.key === "Enter" || event.type === "click") {
       setSearchResults([]);
+      if (voidQuery === true) {
+        return;
+      }
       const options = {
         includeScore: true,
         includeMatches: true,
@@ -54,14 +63,16 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
 
       const fuse = new Fuse(items, options);
       const results: any = fuse.search(`^${query} | ${query}$`);
+
       setSearchResults(results);
+
       console.log("FUSE RESULT: ", results);
       dispatch(setIsSubmitted(true));
     } else {
       return;
     }
   };
-
+  console.log("VOID QUERY", voidQuery);
   return (
     <>
       <FlexContainer>
@@ -106,6 +117,7 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
         <List>
           {isSubmitted &&
           searchResults.length > 0 &&
+          !voidQuery &&
           (isBranchAll || isBrandAll)
             ? searchResults.map((item: any) => (
                 <CatalogItem
@@ -147,9 +159,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                       : false
                   }
                   isFilterSearchBranchNum={isSearchBranchNum}
-                  designation={item.item.designation.find((el: string) =>
-                    el.toLowerCase().includes(query.toLowerCase())
-                  )}
+                  designation={item.matches[0].value}
+                  boldExactOrAllMatchDesignation={item.item.designation}
                   isFilterSearchDesignation={isSearchDesignation}
                   indices={item.matches[0].indices}
                 />
@@ -166,6 +177,7 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   branches={item.branches}
                   branchPartNumber={item.branchPartNumber}
                   isFilterSearchBranchNum={isSearchBranchNum}
+                  boldExactOrAllMatchDesignation={item.designation}
                   isFilterSearchDesignation={isSearchDesignation}
                 />
               ))}

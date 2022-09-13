@@ -1,7 +1,8 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, useEffect } from "react";
 import { Box, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
-import { useSelector } from "../../store";
+import { useDispatch, useSelector } from "../../store";
+import { setVoidQuery } from "../../slices/filters";
 import {
   notInCurrBranchAndIsFilterSearchInMerchNumNotBranchNumWithExactQuery,
   notInCurBranchAndIsFilterSearchInMerchantAndBranchNumWithExactQuery,
@@ -28,6 +29,7 @@ interface CatalogProps {
   boldAllMatchBranchPartNumber?: boolean;
   isFilterSearchBranchNum: boolean;
   designation?: string;
+  boldExactOrAllMatchDesignation: string[];
   isFilterSearchDesignation: boolean;
   indices?: [number[]];
 }
@@ -40,6 +42,7 @@ const superBoldTheQuery = (
 ): JSX.Element => {
   // Extracts query depending on the provided range
   const extractedQuery = mainText.slice(indices[0][0], indices[0][1] + 1);
+  let queryOrExtractedQuery;
 
   let remaining: string;
   let combined: JSX.Element = <></>;
@@ -71,62 +74,6 @@ const superBoldTheQuery = (
   return combined;
 };
 
-const superBoldTheDesignation = (
-  query: string,
-  mainText: string,
-  indices: [number[]],
-  isSuperBold?: boolean
-) => {
-  // Extracts query depending on the provided range
-  const extractedQuery = mainText.slice(indices[0][0], indices[0][1] + 1);
-
-  let remaining: string;
-  // let combined: JSX.Element = <></>;
-  let combined;
-  //Bolds the query located at the end of text
-  if (indices[0][0] > 1) {
-    remaining = mainText.slice(0, mainText.length - query.length);
-    combined = (
-      <>
-        {query.length === mainText.length ? "" : remaining}
-        <Box sx={{ fontWeight: `${isSuperBold ? 900 : 500}` }}>
-          {extractedQuery}
-        </Box>
-      </>
-    );
-  } else {
-    //Bolds the query located at the start of text
-
-    remaining = mainText.slice(query.length - mainText.length, mainText.length);
-    console.log("QUERY LENGTH ", query.length);
-    console.log("QUERY:", query.replace(" ", "_"));
-    console.log("EXTRACTED QUERY:", extractedQuery.length);
-    console.log("EXTRACTED QUERY:", extractedQuery);
-    console.log("REMAINING:", remaining);
-    console.log("COMBINED w/ query:", query + remaining);
-    console.log("COMBINED w/ extracted query:", extractedQuery + remaining);
-    console.log("Remaining has space in:", remaining.indexOf(" "));
-    console.log(remaining.indexOf(" ") === 0);
-    if (remaining.indexOf(" ") === 0) {
-      remaining = '\xa0' + remaining.replace(" ", "");
-    } else {
-      remaining = remaining;
-    }
-    combined = (
-      <>
-        <Box sx={{ fontWeight: `${isSuperBold ? 900 : 500}` }}>
-          {query.replaceAll(" ", "\xa0")}
-        </Box>
-        {query.length === mainText.length ? "" : remaining}
-      </>
-    );
-
-    /* <Box sx={{ fontWeight: `${isSuperBold ? 900 : 500}` }}>{query+remaining}</Box> */
-  }
-
-  return combined;
-};
-
 const CatalogItem: FC<CatalogProps> = ({
   productName,
   productDesc,
@@ -142,11 +89,116 @@ const CatalogItem: FC<CatalogProps> = ({
   boldAllMatchBranchPartNumber,
   isFilterSearchBranchNum,
   designation,
+  boldExactOrAllMatchDesignation,
   isFilterSearchDesignation,
   indices,
 }) => {
   const { isSubmitted, query } = useSelector((state) => state.filters);
+  const dispatch = useDispatch();
   const currentBranch = "Your";
+
+  const countInArray = (array: string[], what: string) => {
+    return array.filter((item) => item == what).length;
+  };
+
+  useEffect(() => {
+    const checkQueryArr = query.split("");
+    const isSpaceOccuredManyTimes = countInArray(checkQueryArr, " ") > 1;
+    console.log(isSpaceOccuredManyTimes);
+    const checkIfLastIndexAnd2ndToLastIsSpace =
+      checkQueryArr[checkQueryArr.length - 1] === " " &&
+      checkQueryArr[checkQueryArr.length - 2] === " ";
+
+    const isStartAndEndNotSpace =
+      query.charAt(0) !== " " && query.charAt(query.length - 1) !== " ";
+    const whiteSpaceWithin: string[] = [];
+
+    if (isStartAndEndNotSpace) {
+      query.split("").map((char) => {
+        if (char === " ") {
+          whiteSpaceWithin.push(char);
+        }
+      });
+    }
+
+    if (
+      (checkIfLastIndexAnd2ndToLastIsSpace && isSpaceOccuredManyTimes) ||
+      whiteSpaceWithin.length >= 2
+    ) {
+      dispatch(setVoidQuery(true));
+    }
+  }, [dispatch, query]);
+
+  const superBoldTheDesignation = (
+    query: string,
+    mainText: string,
+    indices: [number[]],
+    isSuperBold?: boolean
+  ) => {
+    // Extracts query depending on the provided range
+    // let extractedQuery = mainText.slice(indices[0][0], indices[0][1] + 1);
+    let extractedQuery = mainText.slice(indices[0][0], query.length);
+    let remaining: string;
+    let combined: JSX.Element = <></>;
+
+    //Bolds the query located at the end of text
+    if (indices[0][0] > 1) {
+      remaining = mainText.slice(0, mainText.length - query.length);
+      combined = (
+        <>
+          {query.length === mainText.length ? "" : remaining}
+          <Box sx={{ fontWeight: `${isSuperBold ? 900 : 500}` }}>
+            {extractedQuery + "_"}
+          </Box>
+        </>
+      );
+    } else {
+      //Bolds the query located at the start of text
+      remaining = mainText.slice(
+        query.length - mainText.length,
+        mainText.length
+      );
+      console.log("QUERY LENGTH ", query.length);
+      console.log("QUERY:", query.replace(" ", "_"));
+      console.log("EXTRACTED QUERY:", extractedQuery.length);
+      console.log("EXTRACTED QUERY:", extractedQuery);
+      console.log("REMAINING:", remaining);
+      console.log("COMBINED w/ query:", query + remaining);
+      console.log("COMBINED w/ extracted query:", extractedQuery + remaining);
+      console.log("Remaining has space in:", remaining.indexOf(" "));
+      console.log(remaining.indexOf(" ") === 0);
+
+      //If first char of remaining is whitespace
+      if (remaining.indexOf(" ") === 0) {
+        remaining = "\xa0" + remaining.replace(" ", ""); // maintain whitespace on start
+      } else {
+        remaining = mainText.slice(
+          query.length - mainText.length,
+          mainText.length
+        );
+      }
+
+      combined = (
+        <>
+          <Box
+            sx={{
+              fontWeight: `${isSuperBold ? 900 : 500}`,
+            }}
+          >
+            {extractedQuery.replaceAll(" ", "\xa0")}
+          </Box>
+          {query.length >= mainText.length ? "" : remaining}
+        </>
+      );
+    }
+
+    // If query is equal to designation and query length is greater
+    if (query.length > mainText.length) {
+      dispatch(setVoidQuery(true));
+    } else {
+      return combined;
+    }
+  };
 
   let resultMsg: JSX.Element = <></>;
   let resultLocation: JSX.Element = <></>;
@@ -154,44 +206,36 @@ const CatalogItem: FC<CatalogProps> = ({
   // Is IN CURRENT branch/catalog conditions ------------
   const isCurrentBranchAndExactMerchantNumber =
     currentBranch === branch && boldExactMerchantPartNumber;
-  const isCurrentBranchAndExactBranchNumber =
-    currentBranch === branch && boldExactBranchPartNumber;
-
   const isCurrentBranchAndAllMatchMerchantNumber =
     currentBranch === branch && boldAllMatchMerchantPartNumber;
+
+  const isCurrentBranchAndExactBranchNumber =
+    currentBranch === branch && boldExactBranchPartNumber;
   const isCurrentBranchAndAllMatchBranchNumber =
     currentBranch === branch && boldAllMatchBranchPartNumber;
 
   const isCurrentBranchAndExactDesignation =
-    currentBranch === branch && designation;
+    currentBranch === branch &&
+    boldExactOrAllMatchDesignation.some((el) => el === designation);
+  const isCurrentBranchAndAllMatchDesignation =
+    currentBranch === branch && boldExactOrAllMatchDesignation.includes(query);
 
   // Is NOT CURRENT branch/catalog conditions ------------
   const isNotCurrentBranchAndExactMerchantNumber =
     currentBranch !== branch && boldExactMerchantPartNumber;
-  const isNotCurrentBranchAndExactBranchNumber =
-    currentBranch !== branch && boldExactBranchPartNumber;
   const isNotCurrentBranchAndAllMatchMerchantNumber =
     currentBranch !== branch && boldAllMatchMerchantPartNumber;
+
+  const isNotCurrentBranchAndExactBranchNumber =
+    currentBranch !== branch && boldExactBranchPartNumber;
   const isNotCurrentBranchAndAllMatchBranchNumber =
     currentBranch !== branch && boldAllMatchBranchPartNumber;
 
   const isNotCurrentBranchAndExactDesignation =
-    currentBranch !== branch && designation;
-
-  // FILTER BY MERCHANT NUM ADDITIONAL CONDITIONS
-  const notInCurrBranch_IsFilterSearchInMerchantNumNotBranchNum_WithExactMerchNum: boolean =
-    notInCurrBranchAndIsFilterSearchInMerchNumNotBranchNumWithExactQuery(
-      isFilterSearchMerchantNum,
-      isFilterSearchBranchNum,
-      isNotCurrentBranchAndExactMerchantNumber
-    );
-
-  const notInCurrBranch_IsFilterSearchInMerchantAndBranchNum_WithExactMerchNum: boolean =
-    notInCurBranchAndIsFilterSearchInMerchantAndBranchNumWithExactQuery(
-      isFilterSearchMerchantNum,
-      isFilterSearchBranchNum,
-      isNotCurrentBranchAndExactMerchantNumber
-    );
+    currentBranch !== branch &&
+    boldExactOrAllMatchDesignation.some((el) => el === designation);
+  const isNotCurrentBranchAndAllMatchDesignation =
+    currentBranch !== branch && boldExactOrAllMatchDesignation.includes(query);
 
   // Result Message and Location MERCHANT ------------
   if (
@@ -292,7 +336,9 @@ const CatalogItem: FC<CatalogProps> = ({
     isFilterSearchDesignation &&
     isSubmitted &&
     (isCurrentBranchAndExactDesignation ||
-      isNotCurrentBranchAndExactDesignation)
+      isCurrentBranchAndAllMatchDesignation ||
+      isNotCurrentBranchAndExactDesignation ||
+      isNotCurrentBranchAndAllMatchDesignation)
   ) {
     resultMsg = (
       <Fragment>
@@ -303,7 +349,7 @@ const CatalogItem: FC<CatalogProps> = ({
         <Designation component="p">
           {superBoldTheDesignation(
             query,
-            designation,
+            designation!,
             indices!,
             Boolean(isCurrentBranchAndExactDesignation)
           )}
