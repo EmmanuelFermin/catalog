@@ -127,14 +127,17 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   merchant={item.item.merchant}
                   merchantPartNumber={item.item.merchantPartNumber}
                   boldExactMerchantPartNumber={
-                    query === item.item.merchantPartNumber &&
+                    query.toLowerCase() ===
+                      item.item.merchantPartNumber.toLowerCase() &&
                     isSubmitted &&
                     isSearchMerchantNum
                       ? true
                       : false
                   }
                   boldAllMatchMerchantPartNumber={
-                    item.item.merchantPartNumber.includes(query) &&
+                    item.item.merchantPartNumber
+                      .toLowerCase()
+                      .includes(query.toLowerCase()) &&
                     isSubmitted &&
                     isSearchMerchantNum
                       ? true
@@ -145,14 +148,17 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   branches={item.item.branches}
                   branchPartNumber={item.item.branchPartNumber}
                   boldExactBranchPartNumber={
-                    query === item.item.branchPartNumber &&
+                    query.toLowerCase() ===
+                      item.item.branchPartNumber.toLowerCase() &&
                     isSubmitted &&
                     isSearchBranchNum
                       ? true
                       : false
                   }
                   boldAllMatchBranchPartNumber={
-                    item.item.branchPartNumber.includes(query) &&
+                    item.item.branchPartNumber
+                      .toLowerCase()
+                      .includes(query.toLowerCase()) &&
                     isSubmitted &&
                     isSearchBranchNum
                       ? true
