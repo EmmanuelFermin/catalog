@@ -118,7 +118,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
           {isSubmitted &&
           searchResults.length > 0 &&
           !voidQuery &&
-          (isBranchAll || isBrandAll)
+          isBranchAll &&
+          isBrandAll
             ? searchResults.map((item: any) => (
                 <CatalogItem
                   key={item.item.productId}
