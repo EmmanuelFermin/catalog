@@ -3,10 +3,6 @@ import { Box, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "../../store";
 import { setVoidQuery } from "../../slices/filters";
-import {
-  notInCurrBranchAndIsFilterSearchInMerchNumNotBranchNumWithExactQuery,
-  notInCurBranchAndIsFilterSearchInMerchantAndBranchNumWithExactQuery,
-} from "../../utils/CatalogFilterConditions/Merchant";
 
 type Branches = {
   branch: string;
@@ -34,7 +30,7 @@ interface CatalogProps {
   indices?: [number[]];
 }
 
-const superBoldTheQuery = (
+const superBoldMerchOrBranchNum = (
   query: string,
   mainText: string,
   indices: [number[]],
@@ -42,7 +38,6 @@ const superBoldTheQuery = (
 ): JSX.Element => {
   // Extracts query depending on the provided range
   const extractedQuery = mainText.slice(indices[0][0], indices[0][1] + 1);
-  let queryOrExtractedQuery;
 
   let remaining: string;
   let combined: JSX.Element = <></>;
@@ -104,7 +99,6 @@ const CatalogItem: FC<CatalogProps> = ({
   useEffect(() => {
     const checkQueryArr = query.split("");
     const isSpaceOccuredManyTimes = countInArray(checkQueryArr, " ") > 1;
-    console.log(isSpaceOccuredManyTimes);
     const checkIfLastIndexAnd2ndToLastIsSpace =
       checkQueryArr[checkQueryArr.length - 1] === " " &&
       checkQueryArr[checkQueryArr.length - 2] === " ";
@@ -129,7 +123,7 @@ const CatalogItem: FC<CatalogProps> = ({
     }
   }, [dispatch, query]);
 
-  const superBoldTheDesignation = (
+  const superBoldDesignation = (
     query: string,
     mainText: string,
     indices: [number[]],
@@ -168,9 +162,9 @@ const CatalogItem: FC<CatalogProps> = ({
       console.log("Remaining has space in:", remaining.indexOf(" "));
       console.log(remaining.indexOf(" ") === 0);
 
-      //If first char of remaining is whitespace
+      //If prefix of remaining is whitespace
       if (remaining.indexOf(" ") === 0) {
-        remaining = "\xa0" + remaining.replace(" ", ""); // maintain whitespace on start
+        remaining = "\xa0" + remaining.replace(" ", ""); // Maintains whitespace on prefix
       } else {
         remaining = mainText.slice(
           query.length - mainText.length,
@@ -199,9 +193,6 @@ const CatalogItem: FC<CatalogProps> = ({
       return combined;
     }
   };
-
-  let resultMsg: JSX.Element = <></>;
-  let resultLocation: JSX.Element = <></>;
 
   // Is IN CURRENT branch/catalog conditions ------------
   const isCurrentBranchAndExactMerchantNumber =
@@ -237,12 +228,15 @@ const CatalogItem: FC<CatalogProps> = ({
   const isNotCurrentBranchAndAllMatchDesignation =
     currentBranch !== branch && boldExactOrAllMatchDesignation.includes(query);
 
+  let resultMsg: JSX.Element = <></>;
+  let resultLocation: JSX.Element = <></>;
   // Result Message and Location MERCHANT ------------
   if (
     isFilterSearchMerchantNum &&
     isSubmitted &&
     (isCurrentBranchAndExactMerchantNumber ||
       isCurrentBranchAndAllMatchMerchantNumber ||
+      isNotCurrentBranchAndExactMerchantNumber ||
       isNotCurrentBranchAndAllMatchMerchantNumber)
   ) {
     resultMsg = (
@@ -252,7 +246,7 @@ const CatalogItem: FC<CatalogProps> = ({
           isExactlyFound={isCurrentBranchAndExactMerchantNumber}
         >{`Manufacturer ${merchant} Part Number :`}</ResultMsg>
         <MerchantPartNum component="p">
-          {superBoldTheQuery(
+          {superBoldMerchOrBranchNum(
             query,
             merchantPartNumber,
             indices!,
@@ -292,7 +286,7 @@ const CatalogItem: FC<CatalogProps> = ({
           isExactlyFound={isCurrentBranchAndExactBranchNumber}
         >{`${branch} catalog Part Number :`}</ResultMsg>
         <BranchPartNum component="p">
-          {superBoldTheQuery(
+          {superBoldMerchOrBranchNum(
             query,
             branchPartNumber,
             indices!,
@@ -347,7 +341,7 @@ const CatalogItem: FC<CatalogProps> = ({
           isExactlyFound={Boolean(isCurrentBranchAndExactDesignation)}
         >{`${branch} catalog Designation :`}</ResultMsg>
         <Designation component="p">
-          {superBoldTheDesignation(
+          {superBoldDesignation(
             query,
             designation!,
             indices!,
