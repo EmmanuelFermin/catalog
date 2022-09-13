@@ -8,6 +8,7 @@ import {
   Button,
   Divider,
   Drawer,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -21,6 +22,9 @@ import Logo from "../assets/logo/Logo.png";
 import MainNavIconButtons from "./MainNavIconButtons";
 import MainDrawerItemIcons from "./MainDrawerItemIcons";
 import MainResponsiveMenu from "./MainResponsiveMenu";
+import MainResponsiveFilter from "./MainResponsiveFilter";
+import Filters from "../components/Catalog/Filters";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 interface DrawerAppBarProps {
   window?: () => Window;
@@ -31,7 +35,8 @@ const navItems = ["Tools", "Catalogs"];
 
 const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [mobileOpenMenu, setMobileOpenMenu] = useState<boolean>(false);
+  const [mobileOpenFilter, setMobileOpenFilter] = useState<boolean>(false);
   const [notifs, setNotifs] = useState<number>(1);
   const [checklists, setChecklists] = useState<number>(1);
   const [totalNotifs, setTotalNotifs] = useState<number>(0);
@@ -40,12 +45,16 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
     setTotalNotifs(notifs + checklists);
   }, [checklists, notifs]);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  const handleDrawerMenuToggle = () => {
+    setMobileOpenMenu(!mobileOpenMenu);
   };
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+  const handleDrawerFilterToggle = () => {
+    setMobileOpenFilter(!mobileOpenFilter);
+  };
+
+  const drawerMenu = (
+    <Box onClick={handleDrawerMenuToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         Centralized Catalog
       </Typography>
@@ -60,6 +69,22 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
         ))}
         <MainDrawerItemIcons />
       </List>
+    </Box>
+  );
+
+  const drawerFilter = (
+    <Box sx={{ textAlign: "left" }}>
+      <IconButton
+        aria-label="delete"
+        size="large"
+        onClick={handleDrawerFilterToggle}
+      >
+        <CloseOutlinedIcon fontSize="inherit" />
+      </IconButton>
+      <Divider />
+      <Box sx={{ p: { xs: "10px", sm: "10px" } }}>
+        <Filters />
+      </Box>
     </Box>
   );
 
@@ -95,8 +120,9 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
             placeholder="Search"
             variant="outlined"
           />
+          <MainResponsiveFilter onClick={handleDrawerFilterToggle} />
           <MainResponsiveMenu
-            onClick={handleDrawerToggle}
+            onClick={handleDrawerMenuToggle}
             totalNotifs={totalNotifs}
           />
           <Box
@@ -128,8 +154,8 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
           anchor="right"
           container={container}
           variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
+          open={mobileOpenMenu}
+          onClose={handleDrawerMenuToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
@@ -141,7 +167,29 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
             },
           }}
         >
-          {drawer}
+          {drawerMenu}
+        </Drawer>
+      </Box>
+
+      <Box component="nav">
+        <Drawer
+          anchor="right"
+          container={container}
+          variant="temporary"
+          open={mobileOpenFilter}
+          onClose={handleDrawerFilterToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", sm: "block", md: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: 300,
+            },
+          }}
+        >
+          {drawerFilter}
         </Drawer>
       </Box>
     </Box>

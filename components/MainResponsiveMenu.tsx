@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Badge, IconButton } from "@mui/material";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
+import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 
 interface MainResponsiveMenuProps {
   onClick: () => void;
@@ -14,6 +15,7 @@ const MainResponsiveMenu: FC<MainResponsiveMenuProps> = ({
 }) => {
   return (
     <>
+    
       <IconButton
         color="inherit"
         aria-label="open drawer"

@@ -66,13 +66,12 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
 
       setSearchResults(results);
 
-      console.log("FUSE RESULT: ", results);
       dispatch(setIsSubmitted(true));
     } else {
       return;
     }
   };
-  console.log("VOID QUERY", voidQuery);
+
   return (
     <>
       <FlexContainer>
