@@ -117,7 +117,7 @@ const CatalogItem: FC<CatalogProps> = ({
 
     if (
       (checkIfLastIndexAnd2ndToLastIsSpace && isSpaceOccuredManyTimes) ||
-      whiteSpaceWithin.length >= 2
+      whiteSpaceWithin.length > 2
     ) {
       dispatch(setVoidQuery(true));
     }
