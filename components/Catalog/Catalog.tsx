@@ -62,7 +62,7 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
       };
 
       const fuse = new Fuse(items, options);
-      const results: any = fuse.search(`^${query} | ${query}$`);
+      const results: any = fuse.search(`^"${query}" | "${query}"$`);
 
       setSearchResults(results);
 

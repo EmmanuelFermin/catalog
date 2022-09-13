@@ -127,11 +127,11 @@ const CatalogItem: FC<CatalogProps> = ({
     query: string,
     mainText: string,
     indices: [number[]],
-    isSuperBold?: boolean
+    isSuperBold: boolean
   ) => {
     // Extracts query depending on the provided range
-    // let extractedQuery = mainText.slice(indices[0][0], indices[0][1] + 1);
-    let extractedQuery = mainText.slice(indices[0][0], query.length);
+    let extractedQuery = mainText.slice(indices[0][0], indices[0][1] + 1);
+    // let extractedQuery = mainText.slice(indices[0][0], query.length);
     let remaining: string;
     let combined: JSX.Element = <></>;
 
@@ -142,7 +142,7 @@ const CatalogItem: FC<CatalogProps> = ({
         <>
           {query.length === mainText.length ? "" : remaining}
           <Box sx={{ fontWeight: `${isSuperBold ? 900 : 500}` }}>
-            {extractedQuery + "_"}
+            {extractedQuery}
           </Box>
         </>
       );
@@ -166,10 +166,18 @@ const CatalogItem: FC<CatalogProps> = ({
       if (remaining.indexOf(" ") === 0) {
         remaining = "\xa0" + remaining.replace(" ", ""); // Maintains whitespace on prefix
       } else {
+        //If mainText contains no whitespace
         remaining = mainText.slice(
           query.length - mainText.length,
           mainText.length
         );
+        //If mainText contains whitespace
+        if (mainText.includes(" ")) {
+          remaining = mainText.slice(
+            query.length - mainText.length,
+            mainText.length
+          );
+        }
       }
 
       combined = (
@@ -180,6 +188,7 @@ const CatalogItem: FC<CatalogProps> = ({
             }}
           >
             {extractedQuery.replaceAll(" ", "\xa0")}
+            {/* {extractedQuery} */}
           </Box>
           {query.length >= mainText.length ? "" : remaining}
         </>
@@ -208,6 +217,11 @@ const CatalogItem: FC<CatalogProps> = ({
   const isCurrentBranchAndExactDesignation =
     currentBranch === branch &&
     boldExactOrAllMatchDesignation.some((el) => el === designation);
+
+  console.log(
+    "CURRENT BRANCH AND EXACT DESIGNATION: ",
+    isCurrentBranchAndExactDesignation
+  );
   const isCurrentBranchAndAllMatchDesignation =
     currentBranch === branch && boldExactOrAllMatchDesignation.includes(query);
 
