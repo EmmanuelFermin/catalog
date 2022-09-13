@@ -39,18 +39,18 @@ const StyledContainer = styled(Container)`
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
       && {
-        padding-top: 100px; // +46px (54px orig)
-        padding-left: 64px;
-        padding-right: 45px;
+        padding-top: 80px;
+        padding-left: 34px;
+        padding-right: 40px;
       }
     }
 
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
       && {
-        padding-top: 100px; // +46px (54px orig)
-        padding-left: 64px;
-        padding-right: 45px;
+        padding-top: 80px;
+        padding-left: 34px;
+        padding-right: 40px;
       }
     }
 

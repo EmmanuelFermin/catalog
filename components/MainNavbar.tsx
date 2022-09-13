@@ -108,7 +108,7 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
               <NavButton
                 key={item}
                 sx={{
-                  fontSize: { lg: "1rem", xl: "1.40625rem" },
+                  fontSize: { md: "0.775rem", lg: "1rem", xl: "1.40625rem" },
                   ml: { md: "11px", lg: "11px", xl: "31px" },
                 }}
               >
@@ -227,7 +227,6 @@ const SearchField = styled(TextField)`
     width: 39%;
     & fieldset {
       border: none;
-
     }
     & input {
       width: 100%;
@@ -243,21 +242,21 @@ const SearchField = styled(TextField)`
         /* PLACEHOLDER Extra small devices (phones, 600px and down) */
         @media only screen and (max-width: 600px) {
           & {
-            font-size: 1rem;
+            font-size: 0.875rem;
           }
         }
 
         /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 600px) {
           & {
-            font-size: 1rem;
+            font-size: 0.875rem;
           }
         }
 
         /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
         @media only screen and (min-width: 900px) {
           & {
-            font-size: 1rem;
+            font-size: 0.875rem;
           }
         }
 
@@ -279,24 +278,24 @@ const SearchField = styled(TextField)`
       /* INPUT Extra small devices (phones, 600px and down) */
       @media only screen and (max-width: 600px) {
         & {
-          font-size: 1rem;
-          height: 0.625rem;
+          font-size: 0.875rem;
+          height: 0.325rem;
         }
       }
 
       /* INPUT Small devices (portrait tablets and large phones, 600px and up) */
       @media only screen and (min-width: 600px) {
         & {
-          font-size: 1rem;
-          height: 0.625rem;
+          font-size: 0.875rem;
+          height: 0.325rem;
         }
       }
 
       /* INPUT Large devices (laptops/desktops, 900px and up) */
       @media only screen and (min-width: 900px) {
         & {
-          font-size: 1rem;
-          height: 0.625rem;
+          font-size: 0.875rem;
+          height: 0.325rem;
         }
       }
 
@@ -314,6 +313,14 @@ const SearchField = styled(TextField)`
           font-size: 1.4375rem;
           height: 0.9375rem;
         }
+      }
+    }
+
+    /* SEARCH FIELD Extra Extra large devices (large laptops and desktops, 1536px and up) */
+    @media only screen and (min-width: 900px) {
+      & {
+        width: 28%;
+        font-size: 0.875rem;
       }
     }
 

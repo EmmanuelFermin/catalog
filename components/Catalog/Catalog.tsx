@@ -79,7 +79,11 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
         <Box
           sx={{
             width: "100%",
-            p: { lg: "10px 20px 10px 20px", xl: "19px 38px 19px 38px" },
+            p: {
+              md: "6px 20px 6px 20px",
+              lg: "10px 20px 10px 20px",
+              xl: "19px 38px 19px 38px",
+            },
             backgroundColor: "#F4F4F4",
             position: "relative",
           }}
@@ -96,9 +100,9 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
             <FormHelperText
               sx={{
                 position: "absolute",
-                bottom: { lg: -2, xl: 0 },
+                bottom: { md: -2, lg: -2, xl: 0 },
                 color: "#d62d24",
-                fontSize: { lg: "0.56rem", xl: "0.75rem" },
+                fontSize: { md: "0.46rem", lg: "0.56rem", xl: "0.75rem" },
               }}
               id="search"
             >
@@ -108,8 +112,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
         </Box>
         <Box
           sx={{
-            ml: { lg: "20px", xl: "35px" },
-            mr: { lg: "20px", xl: "35px" },
+            ml: { md: "10px", lg: "20px", xl: "35px" },
+            mr: { md: "10px", lg: "20px", xl: "35px" },
           }}
         >
           <Button
@@ -119,8 +123,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
             disableElevation
             sx={{
               borderRadius: "0",
-              width: { lg: "5.0625rem", xl: "7.0625rem" },
-              height: { lg: "3.3125rem", xl: "5.3125rem" },
+              width: { md: "3rem", lg: "5.0625rem", xl: "7.0625rem" },
+              height: { md: "2.8rem", lg: "3.3125rem", xl: "5.3125rem" },
             }}
           >
             <GoSearchIcon
@@ -130,7 +134,15 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
         </Box>
       </FlexContainer>
 
-      <Box sx={{ p: { lg: "0 124px 5px 5px", xl: "0 205px 20px 20px" } }}>
+      <Box
+        sx={{
+          p: {
+            md: "0 90px 5px 5px",
+            lg: "0 124px 5px 5px",
+            xl: "0 205px 20px 20px",
+          },
+        }}
+      >
         <List>
           {isSubmitted &&
           searchResults.length > 0 &&
@@ -244,6 +256,12 @@ const SearchField = styled(TextField)`
       height: 50px;
       border-bottom: none;
       border: ${(props: any) => (props.error ? "" : "none")};
+      /* FIELD SET Large devices (laptops/desktops, 900px and up) */
+      @media only screen and (min-width: 900px) {
+        & {
+          height: 36px;
+        }
+      }
 
       /* FIELD SET Extra large devices (large laptops and desktops, 1200px and up) */
       @media only screen and (min-width: 1200px) {
@@ -287,7 +305,7 @@ const SearchField = styled(TextField)`
           }
         }
 
-        /* PLACEHOLDER Small devices (portrait tablets and large phones, 600px and up) */
+        /* PLACEHOLDER Large devices (laptops/desktops, 900px and up) */
         @media only screen and (min-width: 900px) {
           & {
             font-size: 0.775rem;
@@ -348,6 +366,15 @@ const SearchField = styled(TextField)`
           font-weight: 500;
           height: 0.875rem;
         }
+      }
+    }
+
+    /* SEARCH FIELD Large devices (laptops/desktops, 900px and up) */
+    @media only screen and (min-width: 900px) {
+      & {
+        height: 1.9rem;
+        box-shadow: 1px -9px 0px -6px
+          ${(props: any) => (props.error ? "#d62d24" : "#000")} inset;
       }
     }
 
