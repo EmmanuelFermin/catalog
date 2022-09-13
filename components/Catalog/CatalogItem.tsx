@@ -3,41 +3,7 @@ import { Box, ListItem, Typography } from "@mui/material";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "../../store";
 import { setVoidQuery } from "../../slices/filters";
-
-type Branches = {
-  branch: string;
-  merchantPartNumber?: string;
-  branchPartNumber?: string;
-  designation: string[];
-  attributes: string[];
-};
-
-interface CatalogProps {
-  productName: string;
-  productDesc: string;
-  merchant: string;
-  merchantPartNumber: string;
-  boldExactMerchantPartNumber?: boolean;
-  boldAllMatchMerchantPartNumber?: boolean;
-  isFilterSearchMerchantNum: boolean;
-  branch: string;
-  branches: Branches[];
-  branchPartNumber: string;
-  boldExactBranchPartNumber?: boolean;
-  boldAllMatchBranchPartNumber?: boolean;
-  isFilterSearchBranchNum: boolean;
-  designation?: string;
-  boldExactOrAllMatchDesignation: string[];
-  isFilterSearchDesignation: boolean;
-  designationRefIndex: number;
-  designationRelevanceScore: number;
-  attributes?: string;
-  boldExactOrAllMatchAttributes: string[];
-  attributesRefIndex: number;
-  attributesRelevanceScore: number;
-  isFilterSearchAttributes: boolean;
-  indices?: [number[]];
-}
+import type { CatalogProps } from "../../types/catalog";
 
 const superBoldMerchOrBranchNum = (
   query: string,
@@ -139,7 +105,7 @@ const CatalogItem: FC<CatalogProps> = ({
     }
   }, [dispatch, query]);
 
-  const superBoldDesignation = (
+  const superBoldDesignationOrAttributes = (
     query: string,
     mainText: string,
     indices: [number[]],
@@ -168,15 +134,6 @@ const CatalogItem: FC<CatalogProps> = ({
         query.length - mainText.length,
         mainText.length
       );
-      console.log("QUERY LENGTH ", query.length);
-      console.log("QUERY:", query.replace(" ", "_"));
-      console.log("EXTRACTED QUERY:", extractedQuery.length);
-      console.log("EXTRACTED QUERY:", extractedQuery);
-      console.log("REMAINING:", remaining);
-      console.log("COMBINED w/ query:", query + remaining);
-      console.log("COMBINED w/ extracted query:", extractedQuery + remaining);
-      console.log("Remaining has space in:", remaining.indexOf(" "));
-      console.log(remaining.indexOf(" ") === 0);
 
       //If prefix of remaining is whitespace
       if (remaining.indexOf(" ") === 0) {
@@ -384,7 +341,7 @@ const CatalogItem: FC<CatalogProps> = ({
           }
         >{`${branch} catalog Designation :`}</ResultMsg>
         <Designation component="p">
-          {superBoldDesignation(
+          {superBoldDesignationOrAttributes(
             query,
             designation!,
             indices!,
@@ -428,7 +385,7 @@ const CatalogItem: FC<CatalogProps> = ({
           }
         >{`${branch} catalog Attributes :`}</ResultMsg>
         <Attribute component="p">
-          {superBoldDesignation(
+          {superBoldDesignationOrAttributes(
             query,
             attributes!,
             indices!,
