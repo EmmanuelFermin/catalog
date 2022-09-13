@@ -75,7 +75,7 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
   const drawerFilter = (
     <Box sx={{ textAlign: "left" }}>
       <IconButton
-        aria-label="delete"
+        aria-label="Drawer Filter"
         size="large"
         onClick={handleDrawerFilterToggle}
       >
@@ -110,7 +110,7 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
               },
               fontWeight: 500,
               display: { xs: "none", sm: "block" },
-              ml: "10px",
+              ml: { xs: 0, sm: "10px" },
             }}
           >
             Centralized Catalog
@@ -207,7 +207,7 @@ const StyledToolbar = styled(Toolbar)`
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
       && {
-        padding-left: 34px;
+        padding-left: 10px;
         padding-right: 15px;
         min-height: 34px;
       }
@@ -361,6 +361,24 @@ const SearchField = styled(TextField)`
           font-size: 1.4375rem;
           height: 0.9375rem;
         }
+      }
+    }
+
+    /* SEARCH FIELD Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+      & {
+        margin-left: 10px;
+        margin-right: 5px;
+        width: 100%;
+        font-size: 0.875rem;
+      }
+    }
+
+    /* SEARCH FIELD Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+      & {
+        width: 28%;
+        font-size: 0.875rem;
       }
     }
 

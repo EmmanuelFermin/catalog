@@ -22,7 +22,7 @@ const MainResponsiveMenu: FC<MainResponsiveMenuProps> = ({
         edge="start"
         onClick={onClick}
         sx={{
-          ml: { xs: "auto", sm: "1rem" },
+          ml: { xs: "0.1rem", sm: "1rem" },
           display: { sm: "block", md: "none" },
         }}
       >
