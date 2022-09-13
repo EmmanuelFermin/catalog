@@ -27,6 +27,8 @@ interface CatalogProps {
   designation?: string;
   boldExactOrAllMatchDesignation: string[];
   isFilterSearchDesignation: boolean;
+  designationRefIndex: number;
+  designationRelevanceScore: number;
   indices?: [number[]];
 }
 
@@ -85,6 +87,8 @@ const CatalogItem: FC<CatalogProps> = ({
   isFilterSearchBranchNum,
   designation,
   boldExactOrAllMatchDesignation,
+  designationRefIndex,
+  designationRelevanceScore,
   isFilterSearchDesignation,
   indices,
 }) => {
@@ -184,11 +188,14 @@ const CatalogItem: FC<CatalogProps> = ({
         <>
           <Box
             sx={{
-              fontWeight: `${isSuperBold ? 900 : 500}`,
+              fontWeight: `${
+                isSuperBold && query.toLowerCase() === mainText.toLowerCase()
+                  ? 900
+                  : 500
+              }`,
             }}
           >
             {extractedQuery.replaceAll(" ", "\xa0")}
-            {/* {extractedQuery} */}
           </Box>
           {query.length >= mainText.length ? "" : remaining}
         </>
@@ -241,7 +248,7 @@ const CatalogItem: FC<CatalogProps> = ({
     boldExactOrAllMatchDesignation.some((el) => el === designation);
   const isNotCurrentBranchAndAllMatchDesignation =
     currentBranch !== branch && boldExactOrAllMatchDesignation.includes(query);
-
+  console.log(designationRelevanceScore);
   let resultMsg: JSX.Element = <></>;
   let resultLocation: JSX.Element = <></>;
   // Result Message and Location MERCHANT ------------
@@ -352,7 +359,10 @@ const CatalogItem: FC<CatalogProps> = ({
       <Fragment>
         <ResultMsg
           component="p"
-          isExactlyFound={Boolean(isCurrentBranchAndExactDesignation)}
+          isExactlyFound={
+            Boolean(isCurrentBranchAndExactDesignation) &&
+            designationRefIndex === 0
+          }
         >{`${branch} catalog Designation :`}</ResultMsg>
         <Designation component="p">
           {superBoldDesignation(
@@ -368,7 +378,10 @@ const CatalogItem: FC<CatalogProps> = ({
     resultLocation = (
       <ResultLocation
         component="p"
-        isExactlyFound={Boolean(isCurrentBranchAndExactDesignation)}
+        isExactlyFound={
+          Boolean(isCurrentBranchAndExactDesignation) &&
+          designationRefIndex === 0
+        }
       >
         {`Found in ${branch.toLowerCase()} catalog and ${branches.length} ${
           branches.length > 1 ? "others" : "other"
@@ -412,7 +425,8 @@ const CatalogItem: FC<CatalogProps> = ({
                 (isCurrentBranchAndExactMerchantNumber ||
                   isCurrentBranchAndExactBranchNumber)) ||
               (isFilterSearchDesignation &&
-                Boolean(isCurrentBranchAndExactDesignation))
+                Boolean(isCurrentBranchAndExactDesignation) &&
+                designationRefIndex === 0)
                 ? 400
                 : 300
             }`,

@@ -167,6 +167,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   isFilterSearchBranchNum={isSearchBranchNum}
                   designation={item.matches[0].value}
                   boldExactOrAllMatchDesignation={item.item.designation}
+                  designationRefIndex={item.refIndex}
+                  designationRelevanceScore={item.score}
                   isFilterSearchDesignation={isSearchDesignation}
                   indices={item.matches[0].indices}
                 />
@@ -184,6 +186,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
                   branchPartNumber={item.branchPartNumber}
                   isFilterSearchBranchNum={isSearchBranchNum}
                   boldExactOrAllMatchDesignation={item.designation}
+                  designationRefIndex={item.refIndex}
+                  designationRelevanceScore={item.score}
                   isFilterSearchDesignation={isSearchDesignation}
                 />
               ))}
