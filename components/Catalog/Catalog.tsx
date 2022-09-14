@@ -6,7 +6,12 @@ import type { Product } from "../../types/product";
 import Fuse from "fuse.js";
 import CatalogItem from "./CatalogItem";
 import { useDispatch, useSelector } from "../../store";
-import { setIsSubmitted, setQuery, setVoidQuery } from "../../slices/filters";
+import {
+  setIsSubmitted,
+  setQuery,
+  setVoidQuery,
+  setFilterRequiredInResponsive,
+} from "../../slices/filters";
 interface CatalogProps {
   items: Product[];
 }
@@ -16,6 +21,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
   const {
     filterSettings,
     isSubmitted,
+    isBranchesFilterEmpty,
+    isBrandFilterEmpty,
     isSearchInFilterEmpty,
     query,
     voidQuery,
@@ -42,6 +49,10 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
 
   // First layer since JavaScript is only 1 dimensional array
   const handleSearch = (event: any) => {
+    if (isBranchesFilterEmpty || isBrandFilterEmpty || isSearchInFilterEmpty) {
+      dispatch(setFilterRequiredInResponsive(false));
+    }
+
     if (event.key === "Enter" || event.type === "click") {
       setSearchResults([]);
       if (voidQuery === true) {
@@ -79,6 +90,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
           sx={{
             width: "100%",
             p: {
+              xs: "8px 15px 8px 15px",
+              sm: "6px 20px 6px 20px",
               md: "6px 20px 6px 20px",
               lg: "10px 20px 10px 20px",
               xl: "19px 38px 19px 38px",
@@ -99,9 +112,15 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
             <FormHelperText
               sx={{
                 position: "absolute",
-                bottom: { md: -2, lg: -2, xl: 0 },
+                bottom: { xs: -2, sm: -2, md: -2, lg: -2, xl: 0 },
                 color: "#d62d24",
-                fontSize: { md: "0.46rem", lg: "0.56rem", xl: "0.75rem" },
+                fontSize: {
+                  xs: "0.46rem",
+                  sm: "0.46rem",
+                  md: "0.46rem",
+                  lg: "0.56rem",
+                  xl: "0.75rem",
+                },
               }}
               id="search"
             >
@@ -111,8 +130,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
         </Box>
         <Box
           sx={{
-            ml: { md: "10px", lg: "20px", xl: "35px" },
-            mr: { md: "10px", lg: "20px", xl: "35px" },
+            ml: { xs: "7px", sm: "10px", md: "10px", lg: "20px", xl: "35px" },
+            mr: { xs: "7px", sm: "10px", md: "10px", lg: "20px", xl: "35px" },
           }}
         >
           <Button
@@ -122,8 +141,20 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
             disableElevation
             sx={{
               borderRadius: "0",
-              width: { md: "3rem", lg: "5.0625rem", xl: "7.0625rem" },
-              height: { md: "2.8rem", lg: "3.3125rem", xl: "5.3125rem" },
+              width: {
+                xs: "3rem",
+                sm: "3rem",
+                md: "3rem",
+                lg: "5.0625rem",
+                xl: "7.0625rem",
+              },
+              height: {
+                xs: "3rem",
+                sm: "2.8rem",
+                md: "2.8rem",
+                lg: "3.3125rem",
+                xl: "5.3125rem",
+              },
             }}
           >
             <GoSearchIcon
@@ -136,6 +167,8 @@ const Catalog: FC<CatalogProps> = ({ items }) => {
       <Box
         sx={{
           p: {
+            xs: "0 10px 5px 5px",
+            sm: "0 80px 5px 5px",
             md: "0 90px 5px 5px",
             lg: "0 124px 5px 5px",
             xl: "0 205px 20px 20px",
@@ -255,6 +288,21 @@ const SearchField = styled(TextField)`
       height: 50px;
       border-bottom: none;
       border: ${(props: any) => (props.error ? "" : "none")};
+
+      /* FIELD SET Large devices (laptops/desktops, 900px and up) */
+      @media only screen and (max-width: 600px) {
+        & {
+          height: 35px;
+        }
+      }
+
+      /* FIELD SET Large devices (laptops/desktops, 900px and up) */
+      @media only screen and (min-width: 600px) {
+        & {
+          height: 35px;
+        }
+      }
+
       /* FIELD SET Large devices (laptops/desktops, 900px and up) */
       @media only screen and (min-width: 900px) {
         & {
@@ -365,6 +413,24 @@ const SearchField = styled(TextField)`
           font-weight: 500;
           height: 0.875rem;
         }
+      }
+    }
+
+    /* SEARCH FIELD Small devices (portrait tablets and large phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+      & {
+        height: 1.9rem;
+        box-shadow: 1px -9px 0px -6px
+          ${(props: any) => (props.error ? "#d62d24" : "#000")} inset;
+      }
+    }
+
+    /* SEARCH FIELD Small devices (portrait tablets and large phones, 600px and up) */
+    @media only screen and (min-width: 600px) {
+      & {
+        height: 1.9rem;
+        box-shadow: 1px -9px 0px -6px
+          ${(props: any) => (props.error ? "#d62d24" : "#000")} inset;
       }
     }
 

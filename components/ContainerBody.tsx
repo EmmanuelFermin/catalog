@@ -31,7 +31,7 @@ const StyledContainer = styled(Container)`
     /* Small devices (portrait tablets and large phones, 600px and up) */
     @media only screen and (min-width: 600px) {
       & {
-        padding-top: 90px; // +46px (44px orig)
+        padding-top: 85px; // +46px (44px orig)
         padding-left: 34px;
         padding-right: 30px;
       }
@@ -39,7 +39,7 @@ const StyledContainer = styled(Container)`
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
       & {
-        padding-top: 80px;
+        padding-top: 95px;
         padding-left: 34px;
         padding-right: 40px;
       }
@@ -48,7 +48,7 @@ const StyledContainer = styled(Container)`
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
       & {
-        padding-top: 80px;
+        padding-top: 100px;
         padding-left: 34px;
         padding-right: 40px;
       }

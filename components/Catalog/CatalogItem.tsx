@@ -417,13 +417,14 @@ const CatalogItem: FC<CatalogProps> = ({
           component="div"
           sx={{
             fontSize: {
+              xs: "0.75rem",
               sm: "0.75rem",
               md: "0.73rem",
               lg: "0.9rem",
               xl: "1.40625rem",
             },
             fontWeight: 500,
-            mt: { md: "10px", lg: "15px", xl: "33px" },
+            mt: { xs: "10px", sm: "10px", md: "10px", lg: "15px", xl: "33px" },
           }}
         >
           {productName}
@@ -432,6 +433,7 @@ const CatalogItem: FC<CatalogProps> = ({
           component="p"
           sx={{
             fontSize: {
+              xs: "0.75rem",
               sm: "0.75rem",
               md: "0.75rem",
               lg: "0.875rem",
@@ -452,7 +454,7 @@ const CatalogItem: FC<CatalogProps> = ({
             }`,
             letterSpacing: "0.74px",
             color: "#797777",
-            mt: { md: "7px", lg: "9px", xl: "14px" },
+            mt: { xs: "10px", sm: "7px", md: "7px", lg: "9px", xl: "14px" },
           }}
         >
           {productDesc}
@@ -483,7 +485,16 @@ const ResultMsg = styled(Typography)`
       props.isExactlyFound ? 400 : 300};
     color: #797777;
     letter-spacing: 0.74px;
-
+    @media only screen and (max-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
+    @media only screen and (min-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
     @media only screen and (min-width: 900px) {
       & {
         font-size: 0.75rem;
@@ -511,7 +522,16 @@ const ResultLocation = styled(Typography)`
       props.isExactlyFound ? 400 : 300};
     color: #797777;
     letter-spacing: 0.74px;
-
+    @media only screen and (max-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
+    @media only screen and (min-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
     @media only screen and (min-width: 900px) {
       & {
         font-size: 0.75rem;
@@ -539,6 +559,16 @@ const MerchantPartNum = styled(Typography)`
     color: #797777;
     letter-spacing: 0.74px;
     display: flex;
+    @media only screen and (max-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
+    @media only screen and (min-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
 
     @media only screen and (min-width: 900px) {
       & {
@@ -566,7 +596,16 @@ const BranchPartNum = styled(Typography)`
     color: #797777;
     letter-spacing: 0.74px;
     display: flex;
-
+    @media only screen and (max-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
+    @media only screen and (min-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
     @media only screen and (min-width: 900px) {
       & {
         font-size: 0.75rem;
@@ -593,6 +632,16 @@ const Designation = styled(Typography)`
     color: #797777;
     letter-spacing: 0.74px;
     display: flex;
+    @media only screen and (max-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
+    @media only screen and (min-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
 
     @media only screen and (min-width: 900px) {
       & {
@@ -620,7 +669,16 @@ const Attribute = styled(Typography)`
     color: #797777;
     letter-spacing: 0.74px;
     display: flex;
-
+    @media only screen and (max-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
+    @media only screen and (min-width: 600px) {
+      & {
+        font-size: 0.75rem;
+      }
+    }
     @media only screen and (min-width: 900px) {
       & {
         font-size: 0.75rem;

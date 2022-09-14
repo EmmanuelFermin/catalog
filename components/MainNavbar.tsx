@@ -74,13 +74,15 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
 
   const drawerFilter = (
     <Box sx={{ textAlign: "left" }}>
-      <IconButton
-        aria-label="Drawer Filter"
-        size="large"
-        onClick={handleDrawerFilterToggle}
-      >
-        <CloseOutlinedIcon fontSize="inherit" />
-      </IconButton>
+      <Box sx={{ textAlign: "right", mr: 1 }}>
+        <IconButton
+          aria-label="Drawer Filter"
+          size="large"
+          onClick={handleDrawerFilterToggle}
+        >
+          <CloseOutlinedIcon fontSize="inherit" />
+        </IconButton>
+      </Box>
       <Divider />
       <Box sx={{ p: { xs: "10px", sm: "10px" } }}>
         <Filters />
@@ -185,7 +187,7 @@ const DrawerAppBar: FC<DrawerAppBarProps> = (props) => {
             display: { xs: "block", sm: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: 300,
+              width: 265,
             },
           }}
         >
@@ -206,27 +208,27 @@ const StyledToolbar = styled(Toolbar)`
 
     /* Extra small devices (phones, 600px and down) */
     @media only screen and (max-width: 600px) {
-      && {
+      & {
         padding-left: 10px;
         padding-right: 15px;
-        min-height: 34px;
+        height: 34px;
       }
     }
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
     @media only screen and (min-width: 600px) {
-      && {
+      & {
         padding-left: 34px;
-        padding-right: 30px;
-        min-height: 44px;
+        padding-right: 24px;
+        height: 24px;
         /* background-color: green; */
       }
     }
     /* Medium devices (landscape tablets, 768px and up) */
     @media only screen and (min-width: 768px) {
-      && {
-        padding-left: 64px;
-        padding-right: 45px;
+      & {
+        padding-left: 54px;
+        padding-right: 48px;
         height: 54px;
         /* background-color: blue; */
       }
@@ -234,7 +236,7 @@ const StyledToolbar = styled(Toolbar)`
 
     /* Large devices (laptops/desktops, 992px and up) */
     @media only screen and (min-width: 992px) {
-      && {
+      & {
         padding-left: 64px;
         padding-right: 45px;
         height: 54px;
@@ -377,7 +379,7 @@ const SearchField = styled(TextField)`
     /* SEARCH FIELD Small devices (portrait tablets and large phones, 600px and up) */
     @media only screen and (min-width: 600px) {
       & {
-        width: 28%;
+        width: 45%;
         font-size: 0.875rem;
       }
     }

@@ -9,6 +9,7 @@ import {
   setIsBranchesFilterEmpty,
   setIsBrandFilterEmpty,
   setIsSearchInFilterEmpty,
+  setFilterRequiredInResponsive,
 } from "../../slices/filters";
 
 const filterCriteria = [
@@ -16,13 +17,18 @@ const filterCriteria = [
     id: 1,
     title: "Branches",
     options: [
-      { id: 1, name: "All", value: "branch-all", checked: false },
-      { id: 2, name: "Current", value: "branch-current", checked: false },
+      { id: 1, name: "All", value: "branch-all", checked: "isBranchAll" },
+      {
+        id: 2,
+        name: "Current",
+        value: "branch-current",
+        checked: "isBranchCurrent",
+      },
       {
         id: 3,
         name: "Specific selection",
         value: "branch-specific",
-        checked: false,
+        checked: "isBranchSpecific",
       },
     ],
   },
@@ -30,12 +36,12 @@ const filterCriteria = [
     id: 2,
     title: "Brand",
     options: [
-      { id: 1, name: "All", value: "brand-all", checked: false },
+      { id: 1, name: "All", value: "brand-all", checked: "isBrandAll" },
       {
         id: 2,
         name: "Specific selection",
         value: "brand-specific",
-        checked: false,
+        checked: "isBrandSpecific",
       },
     ],
   },
@@ -47,21 +53,26 @@ const filterCriteria = [
         id: 1,
         name: "Merchant Part Number",
         value: "search-merchant-num",
-        checked: false,
+        checked: "isSearchMerchantNum",
       },
       {
         id: 2,
         name: "Branch Part Number",
         value: "search-branch-num",
-        checked: false,
+        checked: "isSearchBranchNum",
       },
       {
         id: 3,
         name: "Designation",
         value: "search-designation",
-        checked: false,
+        checked: "isSearchDesignation",
       },
-      { id: 4, name: "Attributes", value: "search-attributes", checked: false },
+      {
+        id: 4,
+        name: "Attributes",
+        value: "search-attributes",
+        checked: "isSearchAttributes",
+      },
     ],
   },
 ];
@@ -98,46 +109,55 @@ const Filters: FC = () => {
         setIsBranchesAll((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsBranchesFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
       case "branch-current":
         setIsBranchesCurrent((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsBranchesFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
       case "branch-specific":
         setIsBranchesSpecific((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsBranchesFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
       case "brand-all":
         setIsBrandAll((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsBrandFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
       case "brand-specific":
         setIsBrandSpecific((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsBrandFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
       case "search-merchant-num":
         setIsSearchInMerchantPartNumber((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsSearchInFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
       case "search-branch-num":
         setIsSearchInBranchPartNumber((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsSearchInFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
       case "search-designation":
         setIsSearchInDesignation((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsSearchInFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
       case "search-attributes":
         setIsSearchInAttributes((prev) => !prev);
         dispatch(setIsSubmitted(false));
         dispatch(setIsSearchInFilterEmpty(false));
+        dispatch(setFilterRequiredInResponsive(true));
         break;
     }
   };
@@ -182,6 +202,34 @@ const Filters: FC = () => {
     isSearchInDesignation,
     isSearchInMerchantPartNumber,
   ]);
+
+  const checkAnyFilterIsEmpty = useCallback(() => {
+    if (
+      isSubmitted &&
+      isBranchesFilterEmpty &&
+      isBrandFilterEmpty &&
+      isSearchInFilterEmpty
+    ) {
+      dispatch(setFilterRequiredInResponsive(false));
+    } else if (
+      isSubmitted &&
+      !isBranchesFilterEmpty &&
+      !isBrandFilterEmpty &&
+      !isSearchInFilterEmpty
+    ) {
+      dispatch(setFilterRequiredInResponsive(true));
+    }
+  }, [
+    dispatch,
+    isBranchesFilterEmpty,
+    isBrandFilterEmpty,
+    isSearchInFilterEmpty,
+    isSubmitted,
+  ]);
+
+  useEffect(() => {
+    checkAnyFilterIsEmpty();
+  }, [checkAnyFilterIsEmpty]);
 
   useEffect(() => {
     pushFilterSettings();

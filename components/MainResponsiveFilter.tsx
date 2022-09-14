@@ -1,12 +1,14 @@
 import React, { FC } from "react";
 import { Badge, IconButton } from "@mui/material";
 import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined";
+import { useSelector } from "../store";
 
 interface MainResponsiveFilterProps {
   onClick: () => void;
 }
 
 const MainResponsiveFilter: FC<MainResponsiveFilterProps> = ({ onClick }) => {
+  const { filterRequiredInResponsive } = useSelector((state) => state.filters);
   return (
     <>
       <IconButton
@@ -20,7 +22,13 @@ const MainResponsiveFilter: FC<MainResponsiveFilterProps> = ({ onClick }) => {
           display: { xs: "inline-flex", sm: "inline-flex", md: "none" },
         }}
       >
-        <TuneOutlinedIcon />
+        <Badge
+          color="error"
+          variant="dot"
+          invisible={filterRequiredInResponsive}
+        >
+          <TuneOutlinedIcon />
+        </Badge>
       </IconButton>
     </>
   );

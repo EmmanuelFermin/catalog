@@ -22,6 +22,7 @@ interface FilterSettingsState {
   isSearchInFilterEmpty: boolean;
   query: string;
   voidQuery: boolean;
+  filterRequiredInResponsive: boolean;
 }
 
 const initialState: FilterSettingsState = {
@@ -44,6 +45,7 @@ const initialState: FilterSettingsState = {
   isSearchInFilterEmpty: true,
   query: "",
   voidQuery: false,
+  filterRequiredInResponsive: true,
 };
 
 const slice = createSlice({
@@ -71,6 +73,9 @@ const slice = createSlice({
     },
     setVoidQuery(state, action) {
       state.voidQuery = action.payload;
+    },
+    setFilterRequiredInResponsive(state, action) {
+      state.filterRequiredInResponsive = action.payload;
     },
   },
 });
@@ -117,6 +122,12 @@ export const setVoidQuery =
   (isQueryVoid: boolean) =>
   (dispatch: any): void => {
     dispatch(slice.actions.setVoidQuery(isQueryVoid));
+  };
+
+export const setFilterRequiredInResponsive =
+  (isFilterNotEmpty: boolean) =>
+  (dispatch: any): void => {
+    dispatch(slice.actions.setFilterRequiredInResponsive(isFilterNotEmpty));
   };
 
 export default slice;
