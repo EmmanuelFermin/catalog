@@ -282,6 +282,7 @@ const CatalogItem: FC<CatalogProps> = ({
           component="p"
           isExactlyFound={isCurrentBranchAndExactBranchNumber}
         >{`${branch} catalog Part Number :`}</ResultMsg>
+        <br />
         <BranchPartNum component="p">
           {superBoldMerchOrBranchNum(
             query,
@@ -384,6 +385,7 @@ const CatalogItem: FC<CatalogProps> = ({
             attributesRefIndex === 0
           }
         >{`${branch} catalog Attributes :`}</ResultMsg>
+
         <Attribute component="p">
           {superBoldDesignationOrAttributes(
             query,
@@ -460,7 +462,10 @@ const CatalogItem: FC<CatalogProps> = ({
           {productDesc}
         </Typography>
         {/* ----------------------------------- SEARCH RESULT ---------------------------------------- */}
-        <ResultBox>{resultMsg}</ResultBox>
+
+        <ResultBox sx={{ flexDirection: { xs: "column" } }}>
+          {resultMsg}
+        </ResultBox>
         {resultLocation}
       </Box>
     </ListItem>
@@ -471,10 +476,15 @@ export default CatalogItem;
 
 const ResultBox = styled(Box)`
   && {
-    display: inline-flex;
+    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     margin-top: 22.5px;
+    @media only screen and (max-width: 370px) {
+      & {
+        flex-direction: column;
+      }
+    }
   }
 `;
 
