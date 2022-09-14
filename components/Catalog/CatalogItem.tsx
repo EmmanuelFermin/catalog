@@ -475,7 +475,7 @@ const CatalogItem: FC<CatalogProps> = ({
 export default CatalogItem;
 
 const ResultBox = styled(Box)`
-  && {
+  && { 
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
