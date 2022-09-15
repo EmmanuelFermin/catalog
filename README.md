@@ -1,4 +1,18 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## About the App
+
+
+
+1. The current status: enables you to search in by Merchant Part Number, Branch Part Number, Designation, Attributes
+
+  - Merchant Part Num: 60022333, 60033444, 60019533, 60019533LA01
+  - Branch Part Num: 60011222, 60019533, 60044555, DAT60019533
+  - Designation: Food processing industry, Pharmaceutical processing industry, indoor, outdoor, LAN, WAN, IT equipment, Housing Server
+  - Attributes: MM 16, LSZH, Colour Blue, etc.
+
+2. Upon Search: Bolds the searched character/s and super bolds the text if its exact match and in current catalog
+3. This app is responsive from 600px and up/below
+4. 600px display below for mobile phones
 
 ## Getting Started
 
